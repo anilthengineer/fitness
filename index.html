@@ -1242,6 +1242,118 @@ dialog.dialog::backdrop {
 body.onboarding-mode .view {
   max-width: 820px;
 }
+
+/* ===================== v2: görsel iyileştirmeler ve yeni bileşenler ===================== */
+:root, [data-theme="light"], [data-theme="system"] { --radius: 14px; --hero-a: #2e7d5b; --hero-b: #3f9b72; }
+[data-theme="dark"] { --radius: 14px; --hero-a: #1d4d39; --hero-b: #2a6b4f; }
+@media (prefers-color-scheme: dark) { [data-theme="system"] { --hero-a: #1d4d39; --hero-b: #2a6b4f; } }
+
+.topbar { border-bottom: 1px solid var(--border); }
+.card { transition: box-shadow 160ms ease; }
+.card-title { font-size: 1.1rem; letter-spacing: -0.01em; }
+.sub-head { margin: 14px 0 6px; font-weight: 600; }
+.linklike { background: none; border: 0; padding: 0; color: var(--accent-strong); font: inherit; font-weight: 600; cursor: pointer; text-align: left; }
+.linklike:hover { text-decoration: underline; }
+.table tr.selected td { background: var(--accent-soft); }
+.table td.up { color: var(--accent-strong); font-weight: 600; }
+.table td.down { color: var(--warn); font-weight: 600; }
+
+/* Hoş geldin alanı ve sihirbaz */
+.welcome { display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; align-items: center; padding: 20px;
+  border-radius: var(--radius); color: #fff; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); }
+.welcome .row { grid-column: 1 / -1; }
+.welcome .muted { color: rgba(255, 255, 255, 0.88); margin: 4px 0 0; }
+.welcome-mark { width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: rgba(255, 255, 255, 0.16); }
+.welcome-mark svg { width: 32px; height: 32px; }
+.welcome-title { margin: 0; font-size: 1.5rem; letter-spacing: -0.02em; }
+.welcome .btn { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.28); color: #fff; }
+.welcome .btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.26); }
+.stepper { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.stepper li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; color: var(--text-muted); font-size: 0.8rem; position: relative; }
+.stepper li::after { content: ""; position: absolute; top: 15px; left: calc(50% + 20px); right: calc(-50% + 20px); height: 2px; background: var(--border); }
+.stepper li:last-child::after { display: none; }
+.stepper li.done::after { background: var(--accent); }
+.step-dot { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; border: 2px solid var(--border); background: var(--surface); }
+.step-dot svg { width: 16px; height: 16px; }
+.stepper li.current { color: var(--text); font-weight: 600; }
+.stepper li.current .step-dot { border-color: var(--accent); color: var(--accent-strong); background: var(--accent-soft); }
+.stepper li.done .step-dot { border-color: var(--accent); background: var(--accent); color: var(--accent-contrast); }
+@media (max-width: 520px) { .step-label { font-size: 0.7rem; } }
+.wizard-card { padding: 20px; }
+.wizard-actions { justify-content: stretch; }
+.pf-section { border: 0; padding: 0; margin: 0 0 8px; }
+.pf-legend { font-weight: 700; font-size: 1rem; padding: 0; margin-bottom: 2px; }
+
+/* Bugün: selamlama */
+.hello { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 18px;
+  border-radius: var(--radius); color: #fff; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); }
+.hello p { margin: 0; }
+.hello-greet { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+.hello-date { color: rgba(255, 255, 255, 0.85); font-size: 0.9rem; }
+.hello-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-pill { padding: 4px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); font-size: 0.82rem; }
+
+/* Plan */
+.plan-day { font-weight: 700; }
+.plan-rest { padding: 10px 16px; background: var(--surface-2); box-shadow: none; }
+.plan-head { margin-bottom: 8px; }
+.add-row select { flex: 1 1 220px; min-width: 0; width: auto; }
+.prev-perf svg { width: 15px; height: 15px; vertical-align: -2px; color: var(--warn); }
+
+/* Kılavuz */
+body.guide-open { overflow: hidden; }
+.guide-overlay { position: fixed; inset: 0; z-index: 80; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; padding: 16px; }
+.guide-box { width: min(480px, 100%); max-height: calc(100dvh - 32px); overflow: auto; background: var(--surface); color: var(--text);
+  border-radius: 20px; padding: 18px 20px 20px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); display: flex; flex-direction: column; gap: 10px; }
+.guide-top { display: flex; justify-content: space-between; align-items: center; }
+.guide-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; margin: 4px auto 0;
+  color: #fff; background: linear-gradient(135deg, var(--hero-a), var(--hero-b)); }
+.guide-icon svg { width: 34px; height: 34px; }
+.guide-title { margin: 4px 0 0; text-align: center; font-size: 1.3rem; }
+.guide-lines { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; line-height: 1.5; }
+.guide-dots { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+.guide-dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+.guide-dots span.on { width: 22px; border-radius: 999px; background: var(--accent); }
+.guide-actions { display: flex; gap: 8px; align-items: center; margin-top: 4px; }
+
+/* Beslenme: internette arama */
+.off-form .input { flex: 1 1 240px; width: auto; }
+.measure-help summary { cursor: pointer; color: var(--accent-strong); font-weight: 600; font-size: 0.9rem; }
+.measure-help ul { margin: 8px 0 0; padding-left: 20px; }
+
+/* Asistan */
+.ai-card { display: flex; flex-direction: column; gap: 12px; }
+.ai-messages { display: flex; flex-direction: column; gap: 10px; min-height: 220px; max-height: min(60vh, 560px); overflow-y: auto;
+  padding: 12px; border-radius: var(--radius); background: var(--surface-2); }
+.ai-empty { margin: auto; text-align: center; }
+.ai-msg { max-width: 88%; padding: 10px 14px; border-radius: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+.ai-msg p { margin: 0 0 6px; }
+.ai-msg p:last-child { margin-bottom: 0; }
+.ai-msg.me { align-self: flex-end; background: var(--accent); color: var(--accent-contrast); border-bottom-right-radius: 4px; }
+.ai-msg.bot { align-self: flex-start; background: var(--surface); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.ai-msg.err { border-color: var(--warn); }
+.ai-text ul, .ai-text ol { margin: 4px 0 8px; padding-left: 20px; }
+.ai-text li { margin: 2px 0; }
+.ai-head { margin-top: 6px; }
+.ai-compose { display: flex; gap: 8px; align-items: flex-end; }
+.ai-compose textarea { flex: 1; min-height: 46px; resize: vertical; }
+.ai-quick { gap: 6px; }
+.chip-btn { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 0.85rem; cursor: pointer; }
+.chip-btn:hover { border-color: var(--accent); color: var(--accent-strong); }
+.ai-steps { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.ai-steps a { color: var(--accent-strong); font-weight: 600; }
+.ai-settings summary { cursor: pointer; list-style: revert; margin-bottom: 4px; }
+.ai-settings[open] summary { margin-bottom: 12px; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+
+.ex-row { width: 100%; background: none; border: 0; border-bottom: 1px solid var(--border); color: inherit; font: inherit; text-align: left; cursor: pointer; padding: 10px 8px; border-radius: 0; }
+.ex-row.selected { background: var(--accent-soft); border-radius: 10px; }
+.ex-row:hover { background: var(--surface-2); }
+.ex-row .li-title, .ex-row .li-sub { display: block; }
+.ex-change { font-weight: 700; white-space: nowrap; color: var(--text-muted); }
+.ex-change.up { color: var(--accent-strong); }
+.ex-change.down { color: var(--warn); }
+.table td { overflow-wrap: break-word; word-break: normal; }
 </style>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#2e7d5b">
@@ -1265,6 +1377,8 @@ body.onboarding-mode .view {
     <header class="topbar">
       <h1 class="topbar-title" id="view-title"></h1>
       <div class="topbar-actions">
+        <button id="help-btn" class="icon-btn" type="button" aria-label="Kullanım kılavuzu" title="Kullanım kılavuzu"></button>
+        <button id="assistant-btn" class="icon-btn" type="button" aria-label="Asistan" title="Asistan"></button>
         <button id="theme-btn" class="icon-btn" type="button"></button>
         <button id="settings-btn" class="icon-btn" type="button" aria-label="Profil ve ayarlar"></button>
       </div>
@@ -1274,6 +1388,7 @@ body.onboarding-mode .view {
 </div>
 <nav class="bottom-nav" id="bottom-nav" aria-label="Alt menü"></nav>
 <div id="toast-wrap" class="toast-wrap" aria-live="polite"></div>
+<div id="guide-root"></div>
 <dialog id="confirm-dialog" class="dialog">
   <form method="dialog">
     <p id="confirm-msg"></p>
@@ -1341,7 +1456,7 @@ const FOODS = [
 
 // ===== CORE =====
 const STORAGE_KEY = "fitnessApp";
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 const SLOTS = [["breakfast","Kahvaltı"],["lunch","Öğle"],["dinner","Akşam"],["snack","Ara öğün"]];
 const WEEKDAYS = ["", "Pazartesi","Salı","Çarşamba","Perşembe","Cuma","Cumartesi","Pazar"];
 const WEEKDAYS_SHORT = ["", "Pzt","Sal","Çar","Per","Cum","Cmt","Paz"];
@@ -1351,8 +1466,12 @@ const NAV = [
   { view: "nutrition", label: "Beslenme", icon: "nutrition" },
   { view: "progress", label: "İlerleme", icon: "progress" },
   { view: "review", label: "Değerlendirme", short: "Haftalık", icon: "review" },
+  { view: "assistant", label: "Asistan", icon: "chat" },
   { view: "settings", label: "Profil ve Ayarlar", icon: "settings" }
 ];
+// Vücut ölçüleri (cm). Kilo ayrı tutulur (weights).
+const MEASURES = [["waistCm","Bel"],["neckCm","Boyun"],["hipCm","Kalça"],["chestCm","Göğüs"],["shoulderCm","Omuz genişliği"],
+  ["armCm","Kol (pazı)"],["thighCm","Uyluk"],["calfCm","Baldır"]];
 
 function clear(el) {
   while (el && el.firstChild) el.removeChild(el.firstChild);
@@ -1468,7 +1587,15 @@ function icon(name) {
     download: ["M12 3v12", "M7 10l5 5 5-5", "M5 19h14"],
     upload: ["M12 15V3", "M7 8l5-5 5 5", "M5 19h14"],
     info: ["M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z", "M12 8v.5", "M12 11v5"],
-    warning: ["M12 3l10 17H2L12 3z", "M12 9v5", "M12 17v.5"]
+    warning: ["M12 3l10 17H2L12 3z", "M12 9v5", "M12 17v.5"],
+    chat: ["M4 5h16v11H9l-5 4V5z", "M8 9h8", "M8 12h5"],
+    help: ["M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z", "M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5v.7", "M12 17v.5"],
+    search: ["M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14Z", "M20 20l-4-4"],
+    trophy: ["M8 4h8v5a4 4 0 0 1-8 0V4z", "M8 6H5a3 3 0 0 0 3 4", "M16 6h3a3 3 0 0 1-3 4", "M12 13v4", "M8 20h8", "M10 17h4v3h-4z"],
+    ruler: ["M3 17L17 3l4 4L7 21z", "M7 13l2 2", "M10 10l2 2", "M13 7l2 2"],
+    send: ["M4 12l16-8-6 16-2-6-8-2z"],
+    "arrow-up": ["M12 19V5", "M6 11l6-6 6 6"],
+    "arrow-down": ["M12 5v14", "M6 13l6 6 6-6"]
   };
   const d = paths[name] || null;
   if (!d) {
@@ -1578,8 +1705,10 @@ function defaultState() {
     customFoods: [],
     days: {},
     weights: [],
+    measurements: [],
     plan: null,
     sessions: [],
+    customExercises: [],
     menu: null
   };
 }
@@ -1599,7 +1728,10 @@ function migrate(obj) {
 
   const settings = isPlainObject(obj.settings) ? obj.settings : {};
   state.settings = {
-    theme: ["system", "light", "dark"].includes(settings.theme) ? settings.theme : "system"
+    theme: ["system", "light", "dark"].includes(settings.theme) ? settings.theme : "system",
+    guideSeen: settings.guideSeen === true,
+    aiModel: typeof settings.aiModel === "string" ? settings.aiModel : null,
+    aiShareProfile: settings.aiShareProfile === true
   };
 
   const nutrition = isPlainObject(obj.nutrition) ? obj.nutrition : {};
@@ -1608,20 +1740,39 @@ function migrate(obj) {
   state.customFoods = Array.isArray(obj.customFoods) ? obj.customFoods.slice() : [];
   state.days = isPlainObject(obj.days) ? obj.days : {};
 
+  const dateOk = (d) => typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d);
+  const numOrNull = (v) => (v != null && v !== "" && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : null);
+  const measByDate = {};
+  if (Array.isArray(obj.measurements)) {
+    for (const m of obj.measurements) {
+      if (!isPlainObject(m) || !dateOk(m.date)) continue;
+      const entry = { date: m.date };
+      for (const [k] of MEASURES) entry[k] = numOrNull(m[k]);
+      measByDate[m.date] = entry;
+    }
+  }
   if (Array.isArray(obj.weights)) {
     const byDate = {};
     for (const w of obj.weights) {
-      if (!isPlainObject(w)) continue;
-      if (typeof w.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(w.date)) continue;
+      if (!isPlainObject(w) || !dateOk(w.date)) continue;
       const kg = Number(w.kg);
       if (!Number.isFinite(kg) || kg <= 0) continue;
-      const waistCm = w.waistCm != null && w.waistCm !== "" && Number.isFinite(Number(w.waistCm)) ? Number(w.waistCm) : null;
-      byDate[w.date] = { date: w.date, kg, waistCm };
+      byDate[w.date] = { date: w.date, kg };
+      // Sürüm 1'de bel çevresi kilo kaydının içindeydi; ölçümlere taşınır.
+      const waist = numOrNull(w.waistCm);
+      if (waist != null) {
+        if (!measByDate[w.date]) { measByDate[w.date] = { date: w.date }; for (const [k] of MEASURES) measByDate[w.date][k] = null; }
+        if (measByDate[w.date].waistCm == null) measByDate[w.date].waistCm = waist;
+      }
     }
     state.weights = Object.keys(byDate).sort().map((date) => byDate[date]);
   } else {
     state.weights = [];
   }
+  state.measurements = Object.keys(measByDate).sort().map((d) => measByDate[d]);
+  state.customExercises = Array.isArray(obj.customExercises) ? obj.customExercises.filter(isPlainObject) : [];
+  if (state.profile) { delete state.profile.pregnancy; delete state.profile.medicalDiet; }
+  state.schemaVersion = SCHEMA_VERSION;
 
   state.plan = isPlainObject(obj.plan) ? obj.plan : null;
   state.sessions = Array.isArray(obj.sessions) ? obj.sessions.slice() : [];
@@ -1800,6 +1951,9 @@ function validateBackup(obj) {
     }
   }
 
+  if (obj.measurements !== undefined && !Array.isArray(obj.measurements)) add("Vücut ölçüleri geçersiz.");
+  if (obj.customExercises !== undefined && !Array.isArray(obj.customExercises)) add("Kendi hareketlerin geçersiz.");
+
   if (obj.menu !== null && obj.menu !== undefined && !isPlainObject(obj.menu)) {
     add("Menü verisi geçersiz.");
   }
@@ -1943,7 +2097,7 @@ function buildNav() {
     );
   for (const item of NAV) {
     if (side) side.appendChild(makeBtn(item));
-    if (bottom && item.view !== "settings") bottom.appendChild(makeBtn(item, true));
+    if (bottom && item.view !== "settings" && item.view !== "assistant") bottom.appendChild(makeBtn(item, true));
   }
   const settingsBtn = document.getElementById("settings-btn");
   if (settingsBtn) {
@@ -1951,6 +2105,10 @@ function buildNav() {
     settingsBtn.appendChild(icon("settings"));
     settingsBtn.onclick = () => navigate("settings");
   }
+  const aiBtn = document.getElementById("assistant-btn");
+  if (aiBtn) { clear(aiBtn); aiBtn.appendChild(icon("chat")); aiBtn.onclick = () => navigate("assistant"); }
+  const helpBtn = document.getElementById("help-btn");
+  if (helpBtn) { clear(helpBtn); helpBtn.appendChild(icon("help")); helpBtn.onclick = () => openGuide(); }
 }
 
 function navigate(view, tab) {
@@ -2008,6 +2166,7 @@ function rerender() {
     else if (navItem.view === "nutrition") renderNutrition(root);
     else if (navItem.view === "progress") renderProgress(root);
     else if (navItem.view === "review") renderReview(root);
+    else if (navItem.view === "assistant") renderAssistant(root);
     else renderSettings(root);
     if (notice) root.prepend(notice);
   } catch (e) {
@@ -2052,14 +2211,28 @@ function currentWeight() {
   return null;
 }
 
-function upsertWeight(date, kg, waistCm = null) {
-  const k = Number(kg);
-  const w = waistCm != null && waistCm !== "" && Number.isFinite(Number(waistCm)) ? Number(waistCm) : null;
-  const entry = { date, kg: k, waistCm: w };
+function upsertWeight(date, kg) {
+  const entry = { date, kg: Number(kg) };
   const idx = APP.state.weights.findIndex((x) => x.date === date);
   if (idx >= 0) APP.state.weights[idx] = entry;
   else APP.state.weights.push(entry);
   APP.state.weights.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+}
+
+// values: { waistCm, neckCm, ... } — null olanlar kaydedilmemiş sayılır. Hepsi boşsa o günün ölçümü silinir.
+function upsertMeasurement(date, values) {
+  const entry = { date };
+  let any = false;
+  for (const [k] of MEASURES) {
+    const v = values[k];
+    entry[k] = v != null && Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : null;
+    if (entry[k] != null) any = true;
+  }
+  const list = APP.state.measurements;
+  const idx = list.findIndex((x) => x.date === date);
+  if (!any) { if (idx >= 0) list.splice(idx, 1); return; }
+  if (idx >= 0) list[idx] = entry; else list.push(entry);
+  list.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
 }
 
 function card({ title, sub, actions, cls } = {}, ...children) {
@@ -2328,8 +2501,47 @@ const EXERCISES = [
   { id: "dead_bug", name: "Dead bug", pattern: "core", equipment: ["bodyweight"], bodyweight: true, compound: false, increment: 0, tip: "Bel yere bassın; zıt kol ve bacağı yavaşça uzat." }
 ];
 
+const PATTERN_LABELS = { squat: "Bacak – squat", hinge: "Kalça/arka bacak", lunge: "Bacak – tek bacak", push_h: "Göğüs (yatay itiş)",
+  push_v: "Omuz (dikey itiş)", pull_h: "Sırt (yatay çekiş)", pull_v: "Sırt (dikey çekiş)", shoulder_iso: "Omuz (izolasyon)",
+  arms_bi: "Kol – biceps", arms_tri: "Kol – triceps", calf: "Baldır", core: "Karın/core", other: "Diğer" };
+
+// Yerleşik hareketler + kullanıcının eklediği hareketler.
+function allExercises() {
+  return EXERCISES.concat((APP.state && APP.state.customExercises) || []);
+}
+
 function getExercise(id) {
-  return EXERCISES.find(ex => ex.id === id) || null;
+  return allExercises().find(ex => ex.id === id) || null;
+}
+
+// Hareket seçimi için <select> içeriği: kas grubuna göre gruplanmış, kendi hareketlerin en üstte.
+function exerciseSelectOptions(selectEl, selectedId, placeholder) {
+  if (placeholder) selectEl.appendChild(h("option", { value: "", text: placeholder }));
+  const custom = (APP.state.customExercises || []).slice().sort((a, b) => a.name.localeCompare(b.name, "tr"));
+  if (custom.length) {
+    const g = h("optgroup", { attrs: { label: "Kendi hareketlerim" } });
+    custom.forEach(ex => g.appendChild(h("option", { value: ex.id, text: ex.name, selected: ex.id === selectedId ? true : undefined })));
+    selectEl.appendChild(g);
+  }
+  Object.keys(PATTERN_LABELS).forEach(pat => {
+    const list = EXERCISES.filter(ex => ex.pattern === pat);
+    if (!list.length) return;
+    const g = h("optgroup", { attrs: { label: PATTERN_LABELS[pat] } });
+    list.forEach(ex => g.appendChild(h("option", { value: ex.id, text: ex.name, selected: ex.id === selectedId ? true : undefined })));
+    selectEl.appendChild(g);
+  });
+  return selectEl;
+}
+
+// Kullanıcının kendi kuracağı boş plan: yedi gün de dinlenme olarak başlar.
+function emptyPlan() {
+  const days = [];
+  for (let weekday = 1; weekday <= 7; weekday++) days.push({ weekday, type: "rest", title: "Dinlenme", warmup: "", exercises: [] });
+  return { createdAt: Date.now(), days };
+}
+
+function planHasWorkouts() {
+  return !!(APP.state.plan && APP.state.plan.days.some(d => d.type === "workout"));
 }
 
 function availableEquipment(profile) {
@@ -2530,6 +2742,15 @@ function startSession(iso) {
   return session;
 }
 
+// Planda antrenman olmayan bir gün için boş seans; hareketler seans içinde eklenir.
+function startFreeSession(iso) {
+  const existing = (APP.state.sessions || []).find(s => s.date === iso && s.status === "in_progress");
+  if (existing) return existing;
+  const session = { id: uid("s"), date: iso, title: "Serbest antrenman", startedAt: Date.now(), finishedAt: null, status: "in_progress", exercises: [] };
+  APP.state.sessions.push(session);
+  return session;
+}
+
 function lastPerformance(exerciseId, excludeSessionId) {
   const sessions = (APP.state.sessions || []).filter(s => s.status === "done" && s.id !== excludeSessionId);
   sessions.sort((a,b) => {
@@ -2602,12 +2823,6 @@ function autoBlockers(profile) {
   const age = Number(profile.age);
   if (Number.isFinite(age) && age < 18) {
     out.push("18 yaş altı için otomatik enerji açığı ve diyet planı oluşturulmaz.");
-  }
-  if (profile.pregnancy) {
-    out.push("Gebelik veya emzirme döneminde otomatik enerji hedefi ve diyet planı oluşturulmaz.");
-  }
-  if (profile.medicalDiet) {
-    out.push("Özel beslenme gerektiren bir sağlık durumu belirtildiği için otomatik plan oluşturulmaz.");
   }
   return out;
 }
@@ -2764,6 +2979,8 @@ function foodAllowed(food, profile) {
 
   const diet = profile.diet;
   if (diet === "vegan" && food.diet !== "plant") return false;
+  // İçeriği bilinmeyen (internetten eklenen) ürünler et içerebilir; kısıtlı beslenmede menüye alınmaz.
+  if ((diet === "vegetarian" || diet === "pescatarian") && food.diet === "other") return false;
   if (diet === "vegetarian" && (food.diet === "meat" || food.diet === "fish")) return false;
   if (diet === "pescatarian" && food.diet === "meat") return false;
 
@@ -3356,546 +3573,104 @@ function weeklyReview(weekStartIso) {
   };
 }
 
-// ===== PROFILE =====
-function renderOnboarding(root) {
-  clear(root);
 
-  const backupInput = h("input", {
-    type: "file",
-    accept: ".json,application/json",
-    attrs: { id: "onboarding-backup" },
-    style: { display: "none" }
-  });
-
-  const notice = h(
-    "div",
-    { class: "notice notice-info" },
-    h("span", { text: "Daha önce yedek aldıysan " }),
-    h("label", { for: "onboarding-backup", class: "btn btn-ghost", attrs: { tabindex: "0", role: "button" }, on: { keydown: filePickerKey } },
-      svgIcon("upload"),
-      h("span", { text: "Yedekten geri yükle" })
-    ),
-    backupInput
-  );
-
-  backupInput.addEventListener("change", () => {
-    const file = backupInput.files && backupInput.files[0];
-    if (file) importBackup(file);
-    backupInput.value = "";
-  });
-
-  const form = profileForm(null, (p, weightKg) => {
-    APP.state.profile = p;
-    upsertWeight(todayISO(), weightKg);
-    APP.state.plan = generatePlan(p);
-    const t = suggestTargets(p, weightKg);
-    APP.state.nutrition.targets = t
-      ? { kcal: t.kcal, proteinG: t.proteinG, fatG: t.fatG, carbG: t.carbG, source: "auto", updatedAt: Date.now() }
-      : null;
-    saveState();
-    toast("Profil kaydedildi. Haftalık planın hazır.", "ok");
-    navigate("today");
-  });
-
-  const el = card({
-    title: "Profilini oluştur",
-    sub: "Plan ve hedefler bu bilgilere göre hazırlanır. Tüm veriler yalnızca bu tarayıcıda saklanır."
-  }, notice, form);
-
-  root.appendChild(el);
+// ===== Hareket istatistikleri (PR ve gelişim) =====
+// Tahmini 1 tekrar maksimumu (Epley). 12 tekrar üstünde güvenilmez olduğu için hesaplanmaz.
+function estimate1RM(weight, reps) {
+  if (!(weight > 0) || !(reps > 0) || reps > 12) return null;
+  return reps === 1 ? weight : round(weight * (1 + reps / 30), 1);
 }
 
-function profileForm(profile, onSave) {
-  const isEdit = Boolean(profile);
-  const ageValue = profile ? profile.age : null;
-  const heightValue = profile ? profile.heightCm : null;
-  const weightValue = isEdit ? currentWeight() : null;
-  const sexValue = profile ? profile.sex : "";
-  const goalValue = profile ? profile.goal : "";
-  const experienceValue = profile ? profile.experience : "";
-  const activityValue = profile ? profile.activity : "";
-  const trainingDaysValue = profile ? String(profile.trainingDays) : "";
-  const availableValues = profile && Array.isArray(profile.availableDays)
-    ? profile.availableDays.map(String)
-    : [];
-  const sessionMinutesValue = profile ? String(profile.sessionMinutes) : "";
-  const locationValue = profile ? profile.location : "";
-  const equipmentOptions = EQUIPMENT.filter(([id]) => id !== "bodyweight").map(([id, label]) => [id, label]);
-  const equipmentValues = profile && Array.isArray(profile.equipment)
-    ? equipmentOptions.map(([id]) => id).filter(id => profile.equipment.includes(id))
-    : [];
-  const dietValue = profile ? profile.diet : "";
-  const allergenValues = profile && Array.isArray(profile.allergens) ? profile.allergens.slice() : [];
-  const dislikedValue = profile && Array.isArray(profile.disliked) ? profile.disliked.join(", ") : "";
-  const limitationsValue = profile ? profile.limitations : "";
-  const targetValue = profile ? profile.targetWeightKg : null;
-
-  const ageInput = numberInput({
-    id: "pf-age",
-    value: ageValue,
-    min: 13,
-    max: 100,
-    step: 1,
-    placeholder: "Yaş"
-  });
-  const initialAgeHint = isEdit && typeof profile.age === "number" && profile.age < 18
-    ? "18 yaş altında otomatik enerji açığı ve diyet planı oluşturulmaz."
-    : "13–100 arası.";
-  const ageField = field({ label: "Yaş", input: ageInput, hint: initialAgeHint });
-  const ageHintEl = ageField.querySelector(".hint");
-  ageInput.addEventListener("input", () => {
-    const n = parseNum(ageInput.value);
-    ageHintEl.textContent = (n != null && Number.isFinite(n) && n >= 13 && n < 18)
-      ? "18 yaş altında otomatik enerji açığı ve diyet planı oluşturulmaz."
-      : "13–100 arası.";
-  });
-
-  const heightField = field({
-    label: "Boy (cm)",
-    input: numberInput({ id: "pf-height", value: heightValue, min: 120, max: 230, step: 1, placeholder: "cm" })
-  });
-
-  const weightField = field({
-    label: "Kilo (kg)",
-    input: numberInput({ id: "pf-weight", value: weightValue, min: 30, max: 300, step: 0.1, placeholder: "kg" })
-  });
-
-  const sexGroup = segGroup({
-    name: "pf-sex",
-    options: [["male", "Erkek"], ["female", "Kadın"], ["unspecified", "Paylaşmak istemiyorum"]],
-    value: sexValue,
-    legend: "Enerji hesabında kullanılan cinsiyet"
-  });
-  const sexWrap = groupWrap(sexGroup, "Yalnızca tahmini enerji hesabı için kullanılır.");
-
-  const goalGroup = segGroup({
-    name: "pf-goal",
-    options: GOALS,
-    value: goalValue,
-    legend: "Hedef"
-  });
-  const goalWrap = groupWrap(goalGroup);
-
-  const experienceGroup = segGroup({
-    name: "pf-experience",
-    options: EXPERIENCE,
-    value: experienceValue,
-    legend: "Deneyim"
-  });
-  const experienceWrap = groupWrap(experienceGroup);
-
-  const activityField = field({
-    label: "Günlük aktivite düzeyi",
-    input: selectInput({
-      id: "pf-activity",
-      options: [["", "Seç..."], ...Object.entries(ACTIVITY).map(([value, item]) => [value, item.label])],
-      value: activityValue
-    })
-  });
-
-  const trainingDaysField = field({
-    label: "Haftalık antrenman günü sayısı",
-    input: selectInput({
-      id: "pf-trainingDays",
-      options: [["", "Seç..."], ["1", "1 gün"], ["2", "2 gün"], ["3", "3 gün"], ["4", "4 gün"], ["5", "5 gün"], ["6", "6 gün"]],
-      value: trainingDaysValue
-    })
-  });
-
-  const availableGroup = chipGroup({
-    name: "pf-availableDays",
-    options: [[1, "Pzt"], [2, "Sal"], [3, "Çar"], [4, "Per"], [5, "Cum"], [6, "Cmt"], [7, "Paz"]].map(([value, label]) => [String(value), label]),
-    values: availableValues,
-    legend: "Uygun günler"
-  });
-  const availableWrap = groupWrap(availableGroup, "Antrenman günü sayısından fazla gün seçebilirsin.");
-
-  const sessionMinutesField = field({
-    label: "Seans süresi",
-    input: selectInput({
-      id: "pf-sessionMinutes",
-      options: [["", "Seç..."], ["30", "30 dk"], ["45", "45 dk"], ["60", "60 dk"], ["75", "75 dk"], ["90", "90 dk"]],
-      value: sessionMinutesValue
-    })
-  });
-
-  const locationGroup = segGroup({
-    name: "pf-location",
-    options: [["home", "Ev"], ["gym", "Spor salonu"]],
-    value: locationValue,
-    legend: "Antrenman yeri"
-  });
-  const locationWrap = groupWrap(locationGroup);
-
-  const equipmentGroup = chipGroup({
-    name: "pf-equipment",
-    options: equipmentOptions,
-    values: equipmentValues,
-    legend: "Ekipmanlar"
-  });
-  const equipmentWrap = groupWrap(equipmentGroup, "Vücut ağırlığı hareketleri her zaman dahildir. Salon seçilirse tüm ekipmanların olduğu varsayılır.");
-
-  const dietField = field({
-    label: "Beslenme tercihi",
-    input: selectInput({
-      id: "pf-diet",
-      options: [["", "Seç..."], ...DIETS],
-      value: dietValue
-    })
-  });
-
-  const allergenGroup = chipGroup({
-    name: "pf-allergens",
-    options: ALLERGENS,
-    values: allergenValues,
-    legend: "Alerjiler"
-  });
-  const allergenWrap = groupWrap(allergenGroup);
-
-  const dislikedField = field({
-    label: "Sevmediğin yiyecekler",
-    input: textInput({
-      id: "pf-disliked",
-      value: dislikedValue,
-      placeholder: "brokoli, ton balığı"
-    }),
-    hint: "Virgülle ayır, örn. brokoli, ton balığı",
-    wide: true
-  });
-
-  const limitationsField = field({
-    label: "Hareket kısıtları",
-    input: h("textarea", {
-      class: "input",
-      id: "pf-limitations",
-      rows: 3,
-      maxlength: 500,
-      value: limitationsValue,
-      placeholder: "Örn. diz ağrısı nedeniyle derin squat yapmıyorum."
-    }),
-    hint: "Örn. diz ağrısı nedeniyle derin squat yapmıyorum. Uygulama tıbbi değerlendirme yapmaz; planda zorlandığın hareketleri değiştirebilir veya çıkarabilirsin.",
-    wide: true
-  });
-
-  const pregnancyBox = h("input", {
-    type: "checkbox",
-    id: "pf-pregnancy",
-    checked: profile ? Boolean(profile.pregnancy) : false
-  });
-  const medicalDietBox = h("input", {
-    type: "checkbox",
-    id: "pf-medicalDiet",
-    checked: profile ? Boolean(profile.medicalDiet) : false
-  });
-  const pregnancyCheck = h("label", { class: "check" }, pregnancyBox, h("span", { text: "Gebelik veya emzirme dönemindeyim" }));
-  const medicalDietCheck = h("label", { class: "check" }, medicalDietBox, h("span", { text: "Özel beslenme gerektiren bir sağlık durumum var" }));
-  const checksWrap = h("div", { class: "field wide" },
-    h("span", { class: "muted", text: "Durumlar" }),
-    pregnancyCheck,
-    medicalDietCheck
-  );
-
-  const targetField = field({
-    label: "Hedef kilo (kg)",
-    input: numberInput({
-      id: "pf-targetWeight",
-      value: targetValue,
-      min: 30,
-      max: 300,
-      step: 0.1,
-      placeholder: "opsiyonel"
-    }),
-    hint: "Opsiyonel."
-  });
-
-  const form = h(
-    "form",
-    {
-      class: "form",
-      attrs: { novalidate: "" },
-      on: { submit: (e) => { e.preventDefault(); handleProfileSubmit(e); } }
-    },
-    ageField,
-    heightField,
-    weightField,
-    sexWrap,
-    goalWrap,
-    experienceWrap,
-    activityField,
-    trainingDaysField,
-    availableWrap,
-    sessionMinutesField,
-    locationWrap,
-    equipmentWrap,
-    dietField,
-    allergenWrap,
-    dislikedField,
-    limitationsField,
-    checksWrap,
-    targetField,
-    h("div", { class: "form-actions" },
-      h("button", { type: "submit", class: "btn btn-primary" }, isEdit ? "Profili kaydet" : "Kaydet ve başla")
-    )
-  );
-
-  function handleProfileSubmit(e) {
-    if (e && e.preventDefault) e.preventDefault();
-    clearFieldErrors(form);
-
-    let firstInvalid = null;
-
-    const age = parseNum(ageInput.value);
-    if (!isFiniteNumber(age) || age < 13 || age > 100) {
-      setFieldError(ageInput, "Yaş 13 ile 100 arasında olmalı.");
-      firstInvalid = firstInvalid || ageInput;
-    }
-
-    const heightCm = parseNum(form.querySelector("#pf-height").value);
-    const heightInput = form.querySelector("#pf-height");
-    if (!isFiniteNumber(heightCm) || heightCm < 120 || heightCm > 230) {
-      setFieldError(heightInput, "Boy 120–230 cm arasında olmalı.");
-      firstInvalid = firstInvalid || heightInput;
-    }
-
-    const weightInput = form.querySelector("#pf-weight");
-    const weightKg = parseNum(weightInput.value);
-    if (!isFiniteNumber(weightKg) || weightKg < 30 || weightKg > 300) {
-      setFieldError(weightInput, "Kilo 30–300 kg arasında olmalı.");
-      firstInvalid = firstInvalid || weightInput;
-    }
-
-    const sexChecked = sexGroup.querySelector("input:checked");
-    if (!sexChecked) {
-      setFieldError(firstInputOf(sexGroup), "Bir seçenek seç.");
-      firstInvalid = firstInvalid || firstInputOf(sexGroup);
-    }
-
-    const goalChecked = goalGroup.querySelector("input:checked");
-    if (!goalChecked) {
-      setFieldError(firstInputOf(goalGroup), "Bir seçenek seç.");
-      firstInvalid = firstInvalid || firstInputOf(goalGroup);
-    }
-
-    const experienceChecked = experienceGroup.querySelector("input:checked");
-    if (!experienceChecked) {
-      setFieldError(firstInputOf(experienceGroup), "Bir seçenek seç.");
-      firstInvalid = firstInvalid || firstInputOf(experienceGroup);
-    }
-
-    const activityInput = form.querySelector("#pf-activity");
-    const activity = activityInput.value;
-    if (!activity) {
-      setFieldError(activityInput, "Bir seçenek seç.");
-      firstInvalid = firstInvalid || activityInput;
-    }
-
-    const trainingDaysInput = form.querySelector("#pf-trainingDays");
-    const trainingDays = Number(trainingDaysInput.value);
-    if (!trainingDays || trainingDays < 1 || trainingDays > 6) {
-      setFieldError(trainingDaysInput, "Bir seçenek seç.");
-      firstInvalid = firstInvalid || trainingDaysInput;
-    }
-
-    const availableRaw = readChecks(availableGroup, "pf-availableDays").map(Number).filter(v => v >= 1 && v <= 7);
-    const availableDays = Array.from(new Set(availableRaw)).sort((a, b) => a - b);
-    if (trainingDays >= 1 && trainingDays <= 6 && availableDays.length < trainingDays) {
-      setFieldError(firstInputOf(availableGroup), `En az ${trainingDays} gün seç.`);
-      firstInvalid = firstInvalid || firstInputOf(availableGroup);
-    }
-
-    const sessionMinutesInput = form.querySelector("#pf-sessionMinutes");
-    const sessionMinutes = Number(sessionMinutesInput.value);
-    if (![30, 45, 60, 75, 90].includes(sessionMinutes)) {
-      setFieldError(sessionMinutesInput, "Bir seçenek seç.");
-      firstInvalid = firstInvalid || sessionMinutesInput;
-    }
-
-    const locationChecked = locationGroup.querySelector("input:checked");
-    if (!locationChecked) {
-      setFieldError(firstInputOf(locationGroup), "Bir seçenek seç.");
-      firstInvalid = firstInvalid || firstInputOf(locationGroup);
-    }
-
-    const dietInput = form.querySelector("#pf-diet");
-    const diet = dietInput.value;
-    if (!diet) {
-      setFieldError(dietInput, "Bir seçenek seç.");
-      firstInvalid = firstInvalid || dietInput;
-    }
-
-    const targetInput = form.querySelector("#pf-targetWeight");
-    let targetWeightKg = null;
-    const targetRaw = parseNum(targetInput.value);
-    if (targetRaw != null) {
-      if (!isFiniteNumber(targetRaw) || targetRaw < 30 || targetRaw > 300) {
-        setFieldError(targetInput, "Hedef kilo 30–300 kg arasında olmalı.");
-        firstInvalid = firstInvalid || targetInput;
-      } else {
-        targetWeightKg = targetRaw;
+// fromIso null ise tüm zamanlar. Yalnızca tamamlanmış setler sayılır.
+function exerciseStats(exerciseId, fromIso) {
+  const hist = exerciseHistory(exerciseId).filter(r => !fromIso || r.date >= fromIso);
+  const all = exerciseHistory(exerciseId);
+  const res = { sessions: hist.length, prWeight: null, bestE1rm: null, bestReps: null, first: null, last: null, change: null, allTimePr: null };
+  const scan = (rows, target) => {
+    rows.forEach(r => r.sets.forEach(st => {
+      const w = Number(st.weight), reps = Number(st.reps);
+      if (Number.isFinite(w) && w > 0 && Number.isFinite(reps) && reps > 0) {
+        if (!target.prWeight || w > target.prWeight.weight || (w === target.prWeight.weight && reps > target.prWeight.reps)) target.prWeight = { weight: w, reps, date: r.date };
+        const e = estimate1RM(w, reps);
+        if (e != null && (!target.bestE1rm || e > target.bestE1rm.value)) target.bestE1rm = { value: e, weight: w, reps, date: r.date };
       }
-    }
-
-    if (firstInvalid) {
-      firstInvalid.focus();
-      return;
-    }
-
-    const equipmentValues = readChecks(equipmentGroup, "pf-equipment");
-    const equipment = equipmentOptions.map(([id]) => id).filter(id => equipmentValues.includes(id));
-    const allergens = readChecks(allergenGroup, "pf-allergens");
-    const disliked = form.querySelector("#pf-disliked").value.split(",").map(s => s.trim()).filter(Boolean);
-    const limitations = form.querySelector("#pf-limitations").value.trim();
-
-    const newProfile = {
-      age: Number(age),
-      heightCm: Number(heightCm),
-      weightKg: profile && Number.isFinite(profile.weightKg) ? profile.weightKg : Number(weightKg),
-      sex: sexChecked.value,
-      goal: goalChecked.value,
-      experience: experienceChecked.value,
-      activity: activity,
-      trainingDays: Number(trainingDays),
-      availableDays: availableDays,
-      sessionMinutes: Number(sessionMinutes),
-      location: locationChecked.value,
-      equipment: equipment,
-      diet: diet,
-      allergens: allergens,
-      disliked: disliked,
-      limitations: limitations,
-      pregnancy: form.querySelector("#pf-pregnancy").checked,
-      medicalDiet: form.querySelector("#pf-medicalDiet").checked,
-      targetWeightKg: targetWeightKg,
-      createdAt: profile && profile.createdAt ? profile.createdAt : Date.now(),
-      updatedAt: Date.now()
-    };
-
-    onSave(newProfile, Number(weightKg));
+      if (Number.isFinite(reps) && reps > 0 && !(w > 0)) {
+        if (!target.bestReps || reps > target.bestReps.reps) target.bestReps = { reps, date: r.date };
+      }
+    }));
+  };
+  scan(hist, res);
+  const allRes = {}; scan(all, allRes); res.allTimePr = allRes.prWeight || null;
+  const weighted = hist.filter(r => r.topWeight != null);
+  if (weighted.length) {
+    res.first = { date: weighted[0].date, weight: weighted[0].topWeight, reps: weighted[0].repsAtTop };
+    const l = weighted[weighted.length - 1];
+    res.last = { date: l.date, weight: l.topWeight, reps: l.repsAtTop };
+    if (weighted.length >= 2) res.change = round(res.last.weight - res.first.weight, 2);
   }
-
-  return form;
+  return res;
 }
 
-function renderSettings(root) {
-  clear(root);
-
-  const oldProfile = APP.state.profile;
-
-  const profileCard = card({ title: "Profil" },
-    profileForm(oldProfile, (p, kg) => {
-      const prevWeight = currentWeight();
-      if (kg != null && Number.isFinite(kg) && (prevWeight == null || Math.abs(kg - prevWeight) > 0.001)) {
-        upsertWeight(todayISO(), kg);
-      }
-
-      const trainingChanged = !oldProfile
-        || oldProfile.trainingDays !== p.trainingDays
-        || !sameArray(oldProfile.availableDays, p.availableDays)
-        || oldProfile.sessionMinutes !== p.sessionMinutes
-        || oldProfile.location !== p.location
-        || !sameArray(oldProfile.equipment, p.equipment)
-        || oldProfile.experience !== p.experience;
-
-      APP.state.profile = p;
-
-      const t = suggestTargets(p, kg);
-      if (!APP.state.nutrition.targets || APP.state.nutrition.targets.source === "auto") {
-        APP.state.nutrition.targets = t
-          ? { kcal: t.kcal, proteinG: t.proteinG, fatG: t.fatG, carbG: t.carbG, source: "auto", updatedAt: Date.now() }
-          : null;
-      }
-
-      if (trainingChanged) {
-        confirmDialog(
-          "Antrenman ayarların değişti. Haftalık planı yeniden oluşturmak ister misin? Geçmiş antrenman kayıtların değişmez; plandaki elle yaptığın değişiklikler kaybolur.",
-          "Planı yenile"
-        ).then((ok) => {
-          if (ok) APP.state.plan = generatePlan(p);
-          commit();
-          toast("Profil güncellendi.", "ok");
-        });
-      } else {
-        commit();
-        toast("Profil güncellendi.", "ok");
-      }
-    })
-  );
-
-  const themeGroup = segGroup({
-    name: "pf-settings-theme",
-    options: [["system", "Sistem"], ["light", "Açık"], ["dark", "Koyu"]],
-    value: APP.state.settings.theme,
-    legend: "Tema"
+// Seans bitirilirken yeni ağırlık rekorlarını bulur (önceki tamamlanmış seanslarla karşılaştırır).
+function newPRsInSession(session) {
+  const out = [];
+  (session.exercises || []).forEach(e => {
+    const top = Math.max(0, ...(e.sets || []).filter(st => st.done && Number(st.weight) > 0 && Number(st.reps) > 0).map(st => Number(st.weight)));
+    if (!(top > 0)) return;
+    let prev = 0;
+    (APP.state.sessions || []).forEach(s => {
+      if (s.id === session.id || s.status !== "done") return;
+      (s.exercises || []).forEach(x => {
+        if (x.exerciseId !== e.exerciseId) return;
+        (x.sets || []).forEach(st => { if (st.done && Number(st.weight) > prev && Number(st.reps) > 0) prev = Number(st.weight); });
+      });
+    });
+    if (top > prev && prev > 0) out.push({ name: e.name, weight: top, prev });
   });
-  themeGroup.addEventListener("change", (e) => {
-    const target = e.target;
-    if (target && target.name === "pf-settings-theme") {
-      APP.state.settings.theme = target.value;
-      saveState();
-      applyTheme();
-    }
-  });
-  const themeCard = card({ title: "Görünüm" }, groupWrap(themeGroup));
-
-  const backupInput = h("input", {
-    type: "file",
-    accept: ".json,application/json",
-    attrs: { id: "settings-backup" },
-    style: { display: "none" }
-  });
-  const backupCard = card({
-    title: "Yedekleme",
-    sub: "Verilerin yalnızca bu tarayıcıda saklanır. Düzenli olarak yedek indirmen önerilir."
-  },
-    h("div", { class: "row" },
-      h("button", { type: "button", class: "btn", on: { click: () => exportBackup() } },
-        svgIcon("download"),
-        h("span", { text: "Yedeği indir" })
-      ),
-      h("label", { for: "settings-backup", class: "btn btn-ghost", attrs: { tabindex: "0", role: "button" }, on: { keydown: filePickerKey } },
-        svgIcon("upload"),
-        h("span", { text: "Yedekten geri yükle" })
-      ),
-      backupInput
-    )
-  );
-  backupInput.addEventListener("change", () => {
-    const file = backupInput.files && backupInput.files[0];
-    if (file) importBackup(file);
-    backupInput.value = "";
-  });
-
-  const deleteCard = card({ title: "Verileri sil" },
-    h("div", { class: "row" },
-      h("button", {
-        type: "button",
-        class: "btn btn-danger",
-        on: {
-          click: () => {
-            confirmDialog(
-              "Profil, kayıtlar, plan ve yedeklenmemiş tüm veriler bu tarayıcıdan silinecek. Bu işlem geri alınamaz. Emin misin?",
-              "Tümünü sil"
-            ).then((ok) => {
-              if (!ok) return;
-              APP.state = defaultState();
-              saveState();
-              applyTheme();
-              toast("Tüm veriler silindi.", "ok");
-              navigate("today");
-            });
-          }
-        }
-      }, svgIcon("trash"), h("span", { text: "Tüm verileri sil" }))
-    )
-  );
-
-  root.appendChild(profileCard);
-  root.appendChild(themeCard);
-  root.appendChild(backupCard);
-  root.appendChild(deleteCard);
-  root.appendChild(h("p", { class: "small muted" }, "Şema sürümü: 1 · Tahminler bilgilendirme amaçlıdır, tıbbi öneri değildir."));
+  return out;
 }
 
+// ===== Vücut yağ oranı (ABD Donanması yöntemi, tahmini) =====
+// Ölçüler cm. Erkek: bel, boyun, boy. Kadın: bel, kalça, boyun, boy.
+function navyBodyFat(sex, heightCm, m) {
+  if (!m || !(heightCm > 0) || !(m.neckCm > 0) || !(m.waistCm > 0)) return null;
+  let bf = null;
+  if (sex === "male") {
+    if (m.waistCm - m.neckCm <= 0) return null;
+    bf = 495 / (1.0324 - 0.19077 * Math.log10(m.waistCm - m.neckCm) + 0.15456 * Math.log10(heightCm)) - 450;
+  } else if (sex === "female") {
+    if (!(m.hipCm > 0) || m.waistCm + m.hipCm - m.neckCm <= 0) return null;
+    bf = 495 / (1.29579 - 0.35004 * Math.log10(m.waistCm + m.hipCm - m.neckCm) + 0.22100 * Math.log10(heightCm)) - 450;
+  } else {
+    return null;
+  }
+  if (!Number.isFinite(bf) || bf < 2 || bf > 70) return null;
+  return round(bf, 1);
+}
+
+// Yağ oranı için neyin eksik olduğunu Türkçe söyler (hesaplanabiliyorsa boş dizi).
+function bodyFatMissing(sex, m) {
+  if (sex !== "male" && sex !== "female") return ["Cinsiyet (formül erkek ve kadın için farklı; profilde 'paylaşmak istemiyorum' seçili)"];
+  const need = [["waistCm", "Bel"], ["neckCm", "Boyun"]].concat(sex === "female" ? [["hipCm", "Kalça"]] : []);
+  return need.filter(([k]) => !(m && m[k] > 0)).map(([, l]) => l);
+}
+
+function measurementsInRange(fromIso, toIso) {
+  return (APP.state.measurements || []).filter(m => (!fromIso || m.date >= fromIso) && (!toIso || m.date <= toIso));
+}
+
+// ===== PROFILE =====
+// ===== Profil: ilk kurulum sihirbazı ve ayarlar =====
+
+const PF_SESSION_MINUTES = [30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180];
+
+function pfMinutesLabel(m) {
+  if (m < 60) return `${m} dk`;
+  const hr = Math.floor(m / 60), rest = m % 60;
+  return rest ? `${hr} sa ${rest} dk` : `${hr} saat`;
+}
+
+// Bir grup (seçim/çip) için hata satırı; setFieldError ilk girdinin id'si + "-err" ile bulur.
 function groupWrap(groupEl, hint) {
   const first = groupEl.querySelector("input");
   const err = h("p", { class: "error", role: "alert", hidden: true, id: first ? first.id + "-err" : undefined });
@@ -3913,17 +3688,272 @@ function isFiniteNumber(n) {
   return n != null && Number.isFinite(n);
 }
 
-function sameArray(a, b) {
-  if (!Array.isArray(a) || !Array.isArray(b)) return false;
-  if (a.length !== b.length) return false;
-  const x = a.slice().sort((l, r) => String(l).localeCompare(String(r)));
-  const y = b.slice().sort((l, r) => String(l).localeCompare(String(r)));
-  return x.every((v, i) => v === y[i]);
+// Profil alanlarını dört bölüm halinde kurar. read() profil nesnesini döndürür (önce validateStep ile doğrulanmalı).
+function pfBuild(profile) {
+  const isEdit = Boolean(profile);
+  const val = (k, d) => (profile && profile[k] != null ? profile[k] : d);
+
+  const ageInput = numberInput({ id: "pf-age", value: val("age", null), step: 1, placeholder: "Örn. 28" });
+  const heightInput = numberInput({ id: "pf-height", value: val("heightCm", null), step: 1, placeholder: "Örn. 175" });
+  const weightInput = numberInput({ id: "pf-weight", value: isEdit ? currentWeight() : null, step: 0.1, placeholder: "Örn. 72,5" });
+  const targetInput = numberInput({ id: "pf-targetWeight", value: val("targetWeightKg", null), step: 0.1, placeholder: "İsteğe bağlı" });
+
+  const sexGroup = segGroup({ name: "pf-sex", legend: "Cinsiyet",
+    options: [["male", "Erkek"], ["female", "Kadın"], ["unspecified", "Paylaşmak istemiyorum"]], value: val("sex", "") });
+  const goalGroup = segGroup({ name: "pf-goal", legend: "Hedefin ne?", options: GOALS, value: val("goal", "") });
+  const expGroup = segGroup({ name: "pf-experience", legend: "Antrenman deneyimin", options: EXPERIENCE, value: val("experience", "") });
+  const activitySelect = selectInput({ id: "pf-activity", value: val("activity", ""),
+    options: [["", "Seç…"], ...Object.entries(ACTIVITY).map(([v, it]) => [v, it.label])] });
+  const daysSelect = selectInput({ id: "pf-trainingDays", value: profile ? String(profile.trainingDays) : "",
+    options: [["", "Seç…"], ["1", "1 gün"], ["2", "2 gün"], ["3", "3 gün"], ["4", "4 gün"], ["5", "5 gün"], ["6", "6 gün"]] });
+  const availGroup = chipGroup({ name: "pf-availableDays", legend: "Hangi günler uygun?",
+    options: [1, 2, 3, 4, 5, 6, 7].map(d => [String(d), WEEKDAYS_SHORT[d]]),
+    values: profile && Array.isArray(profile.availableDays) ? profile.availableDays.map(String) : [] });
+  const minutesSelect = selectInput({ id: "pf-sessionMinutes", value: profile ? String(profile.sessionMinutes) : "",
+    options: [["", "Seç…"], ...PF_SESSION_MINUTES.map(m => [String(m), pfMinutesLabel(m)])] });
+  const locGroup = segGroup({ name: "pf-location", legend: "Nerede çalışıyorsun?", options: [["home", "Evde"], ["gym", "Spor salonunda"]], value: val("location", "") });
+  const equipGroup = chipGroup({ name: "pf-equipment", legend: "Elindeki ekipmanlar", options: EQUIPMENT.filter(([id]) => id !== "bodyweight"),
+    values: profile && Array.isArray(profile.equipment) ? profile.equipment.slice() : [] });
+  const dietSelect = selectInput({ id: "pf-diet", value: val("diet", ""), options: [["", "Seç…"], ...DIETS] });
+  const allergenGroup = chipGroup({ name: "pf-allergens", legend: "Alerjilerin", options: ALLERGENS,
+    values: profile && Array.isArray(profile.allergens) ? profile.allergens.slice() : [] });
+  const dislikedInput = textInput({ id: "pf-disliked", value: profile && Array.isArray(profile.disliked) ? profile.disliked.join(", ") : "",
+    placeholder: "Örn. brokoli, ton balığı" });
+  const limitsInput = h("textarea", { class: "input", id: "pf-limitations", rows: 3, maxlength: 500, value: val("limitations", ""),
+    placeholder: "Örn. diz ağrısı nedeniyle derin squat yapmıyorum." });
+
+  const sections = [
+    { title: "Seni tanıyalım", sub: "Enerji ihtiyacını tahmin etmek için kullanılır.", fields: [
+      field({ label: "Yaş", input: ageInput }),
+      field({ label: "Boy (cm)", input: heightInput }),
+      field({ label: "Kilo (kg)", input: weightInput }),
+      groupWrap(sexGroup, "Yalnızca tahmini enerji ve yağ oranı hesabında kullanılır.")
+    ] },
+    { title: "Hedefin", sub: "Önerilen kalori ve makro hedefleri buna göre hazırlanır.", fields: [
+      groupWrap(goalGroup), groupWrap(expGroup),
+      field({ label: "Günlük aktivite düzeyi", input: activitySelect, wide: true }),
+      field({ label: "Hedef kilo (kg)", input: targetInput, hint: "İstersen boş bırakabilirsin." })
+    ] },
+    { title: "Antrenman tercihlerin", sub: "Planını kendin kuracaksın; bu bilgiler isteğe bağlı hazır şablon ve hareket önerileri içindir.", fields: [
+      field({ label: "Haftada kaç gün?", input: daysSelect }),
+      field({ label: "Bir seans ne kadar sürebilir?", input: minutesSelect }),
+      groupWrap(availGroup), groupWrap(locGroup),
+      groupWrap(equipGroup, "Vücut ağırlığı hareketleri her zaman dahildir.")
+    ] },
+    { title: "Beslenme ve kısıtlar", sub: "Örnek menüde alerjen ve sevmediğin yiyecekler çıkarılır.", fields: [
+      field({ label: "Beslenme tercihi", input: dietSelect, wide: true }),
+      groupWrap(allergenGroup),
+      field({ label: "Sevmediğin yiyecekler", input: dislikedInput, hint: "Virgülle ayır.", wide: true }),
+      field({ label: "Hareket kısıtların", input: limitsInput, wide: true,
+        hint: "Uygulama tıbbi değerlendirme yapmaz; zorlandığın hareketleri planından çıkarabilir veya değiştirebilirsin." })
+    ] }
+  ];
+
+  const err = (input, msg, st) => { setFieldError(input, msg); if (!st.first) st.first = input; };
+  const checks = [
+    (st) => {
+      const age = parseNum(ageInput.value);
+      // Görünür bir aralık yok; yalnızca açık yazım hatalarını (ör. 250) yakalar.
+      if (!isFiniteNumber(age) || !Number.isInteger(age) || age < 10 || age > 120) err(ageInput, "Geçerli bir yaş gir.", st);
+      const hgt = parseNum(heightInput.value);
+      if (!isFiniteNumber(hgt) || hgt < 100 || hgt > 250) err(heightInput, "Boyunu santimetre olarak gir (örn. 175).", st);
+      const kg = parseNum(weightInput.value);
+      if (!isFiniteNumber(kg) || kg < 25 || kg > 350) err(weightInput, "Kilonu kilogram olarak gir (örn. 72,5).", st);
+      if (!sexGroup.querySelector("input:checked")) err(firstInputOf(sexGroup), "Bir seçenek seç.", st);
+    },
+    (st) => {
+      if (!goalGroup.querySelector("input:checked")) err(firstInputOf(goalGroup), "Bir hedef seç.", st);
+      if (!expGroup.querySelector("input:checked")) err(firstInputOf(expGroup), "Deneyimini seç.", st);
+      if (!activitySelect.value) err(activitySelect, "Aktivite düzeyini seç.", st);
+      const t = parseNum(targetInput.value);
+      if (t != null && (!isFiniteNumber(t) || t < 25 || t > 350)) err(targetInput, "Hedef kiloyu kilogram olarak gir veya boş bırak.", st);
+    },
+    (st) => {
+      const n = Number(daysSelect.value);
+      if (!n) err(daysSelect, "Gün sayısını seç.", st);
+      if (!minutesSelect.value) err(minutesSelect, "Seans süresini seç.", st);
+      if (n && readChecks(availGroup, "pf-availableDays").length < n) err(firstInputOf(availGroup), `En az ${n} gün seç.`, st);
+      if (!locGroup.querySelector("input:checked")) err(firstInputOf(locGroup), "Bir seçenek seç.", st);
+    },
+    (st) => {
+      if (!dietSelect.value) err(dietSelect, "Beslenme tercihini seç.", st);
+    }
+  ];
+
+  // Adımı doğrular; hatalı ilk alana odaklanır. quiet=true ise yalnızca sonucu döndürür.
+  function validateStep(i, quiet) {
+    const st = { first: null };
+    checks[i](st);
+    if (st.first && !quiet) st.first.focus();
+    return !st.first;
+  }
+
+  function read() {
+    const kg = parseNum(weightInput.value);
+    return {
+      profile: {
+        age: parseNum(ageInput.value),
+        heightCm: parseNum(heightInput.value),
+        weightKg: profile && Number.isFinite(profile.weightKg) ? profile.weightKg : kg,
+        sex: sexGroup.querySelector("input:checked").value,
+        goal: goalGroup.querySelector("input:checked").value,
+        experience: expGroup.querySelector("input:checked").value,
+        activity: activitySelect.value,
+        trainingDays: Number(daysSelect.value),
+        availableDays: Array.from(new Set(readChecks(availGroup, "pf-availableDays").map(Number))).sort((a, b) => a - b),
+        sessionMinutes: Number(minutesSelect.value),
+        location: locGroup.querySelector("input:checked").value,
+        equipment: readChecks(equipGroup, "pf-equipment"),
+        diet: dietSelect.value,
+        allergens: readChecks(allergenGroup, "pf-allergens"),
+        disliked: dislikedInput.value.split(",").map(x => x.trim()).filter(Boolean),
+        limitations: limitsInput.value.trim(),
+        targetWeightKg: parseNum(targetInput.value),
+        createdAt: profile && profile.createdAt ? profile.createdAt : Date.now(),
+        updatedAt: Date.now()
+      },
+      weightKg: kg
+    };
+  }
+
+  // Hata mesajlarını temizlemek için tüm alanları kapsayan liste.
+  const allFields = () => sections.flatMap(s => s.fields);
+  return { sections, validateStep, read, allFields };
 }
 
-function svgIcon(name) {
-  if (typeof icon === "function") return icon(name);
-  return svgEl("svg", { width: "24", height: "24", viewBox: "0 0 24 24", "aria-hidden": "true" });
+function pfClearErrors(pf) {
+  pf.allFields().forEach(f => clearFieldErrors(f));
+}
+
+function pfAfterFirstSave(p, weightKg) {
+  APP.state.profile = p;
+  upsertWeight(todayISO(), weightKg);
+  APP.state.plan = emptyPlan();
+  const t = suggestTargets(p, weightKg);
+  APP.state.nutrition.targets = t ? { kcal: t.kcal, proteinG: t.proteinG, fatG: t.fatG, carbG: t.carbG, source: "auto", updatedAt: Date.now() } : null;
+  APP.ui.pfStep = 0;
+  saveState();
+  toast("Profilin hazır. Şimdi Antrenman → Plan'dan kendi planını kurabilirsin.", "ok");
+  navigate("today");
+}
+
+function renderOnboarding(root) {
+  clear(root);
+  // Alanlar sihirbaz boyunca aynı DOM öğeleridir; adım değişince girilen değerler korunur.
+  const pf = APP.ui.pfBuilder || (APP.ui.pfBuilder = pfBuild(null));
+  const step = Math.max(0, Math.min(3, APP.ui.pfStep || 0));
+  const sec = pf.sections[step];
+
+  const backupInput = h("input", { type: "file", accept: ".json,application/json", attrs: { id: "onboarding-backup" }, style: { display: "none" } });
+  backupInput.addEventListener("change", () => {
+    const file = backupInput.files && backupInput.files[0];
+    if (file) importBackup(file);
+    backupInput.value = "";
+  });
+
+  const hero = h("section", { class: "welcome" },
+    h("div", { class: "welcome-mark", attrs: { "aria-hidden": "true" } }, icon("workout")),
+    h("div", { class: "welcome-text" },
+      h("h2", { class: "welcome-title", text: step === 0 ? "Hoş geldin!" : "Profilini tamamlayalım" }),
+      h("p", { class: "muted", text: "Antrenmanını, beslenmeni ve ilerlemeni tek yerden takip et. Verilerin yalnızca bu cihazda saklanır." })),
+    h("div", { class: "row" },
+      h("button", { type: "button", class: "btn btn-sm", on: { click: () => openGuide() } }, icon("help"), "Nasıl kullanılır?"),
+      h("label", { for: "onboarding-backup", class: "btn btn-sm btn-ghost", attrs: { tabindex: "0", role: "button" }, on: { keydown: filePickerKey } },
+        icon("upload"), "Yedekten geri yükle"),
+      backupInput)
+  );
+
+  const steps = h("ol", { class: "stepper", attrs: { "aria-label": "Kurulum adımları" } },
+    pf.sections.map((s, i) => h("li", { class: i === step ? "current" : i < step ? "done" : "", attrs: i === step ? { "aria-current": "step" } : {} },
+      h("span", { class: "step-dot" }, i < step ? icon("check") : String(i + 1)), h("span", { class: "step-label", text: s.title }))));
+
+  const form = h("form", { class: "form", attrs: { novalidate: "" } }, sec.fields);
+  const backBtn = h("button", { type: "button", class: "btn", disabled: step === 0 ? true : undefined,
+    on: { click: () => { APP.ui.pfStep = step - 1; rerender(); } } }, icon("chevron-left"), "Geri");
+  const nextBtn = h("button", { type: "submit", class: "btn btn-primary" }, step === 3 ? "Kaydet ve başla" : "Devam", icon(step === 3 ? "check" : "chevron-right"));
+  form.appendChild(h("div", { class: "form-actions wizard-actions" }, backBtn, h("span", { class: "spacer" }), nextBtn));
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    pfClearErrors(pf);
+    if (!pf.validateStep(step)) return;
+    if (step < 3) { APP.ui.pfStep = step + 1; rerender(); return; }
+    const r = pf.read();
+    APP.ui.pfBuilder = null;
+    pfAfterFirstSave(r.profile, r.weightKg);
+  });
+
+  root.appendChild(hero);
+  root.appendChild(steps);
+  root.appendChild(card({ title: `${step + 1}. ${sec.title}`, sub: sec.sub, cls: "wizard-card" }, form));
+}
+
+function renderSettings(root) {
+  clear(root);
+  const pf = pfBuild(APP.state.profile);
+  const form = h("form", { class: "stack", attrs: { novalidate: "" } });
+  pf.sections.forEach(sec => {
+    form.appendChild(h("fieldset", { class: "pf-section" },
+      h("legend", { class: "pf-legend", text: sec.title }),
+      h("p", { class: "muted small", text: sec.sub }),
+      h("div", { class: "form" }, sec.fields)));
+  });
+  form.appendChild(h("div", { class: "form-actions" }, h("button", { type: "submit", class: "btn btn-primary" }, "Profili kaydet")));
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    pfClearErrors(pf);
+    const bad = [0, 1, 2, 3].find(i => !pf.validateStep(i, true));
+    if (bad !== undefined) {
+      [0, 1, 2, 3].forEach(i => pf.validateStep(i, true));
+      pf.validateStep(bad);
+      return;
+    }
+    const r = pf.read();
+    const prevWeight = currentWeight();
+    if (r.weightKg != null && (prevWeight == null || Math.abs(r.weightKg - prevWeight) > 0.001)) upsertWeight(todayISO(), r.weightKg);
+    APP.state.profile = r.profile;
+    if (!APP.state.nutrition.targets || APP.state.nutrition.targets.source === "auto") {
+      const t = suggestTargets(r.profile, r.weightKg);
+      APP.state.nutrition.targets = t ? { kcal: t.kcal, proteinG: t.proteinG, fatG: t.fatG, carbG: t.carbG, source: "auto", updatedAt: Date.now() } : null;
+    }
+    commit();
+    toast("Profil güncellendi.", "ok");
+  });
+
+  const themeGroup = segGroup({ name: "pf-settings-theme", options: [["system", "Sistem"], ["light", "Açık"], ["dark", "Koyu"]],
+    value: APP.state.settings.theme, legend: "Tema" });
+  themeGroup.addEventListener("change", (e) => {
+    if (e.target && e.target.name === "pf-settings-theme") { APP.state.settings.theme = e.target.value; saveState(); applyTheme(); }
+  });
+
+  const backupInput = h("input", { type: "file", accept: ".json,application/json", attrs: { id: "settings-backup" }, style: { display: "none" } });
+  backupInput.addEventListener("change", () => {
+    const file = backupInput.files && backupInput.files[0];
+    if (file) importBackup(file);
+    backupInput.value = "";
+  });
+
+  root.appendChild(card({ title: "Profil" }, form));
+  root.appendChild(card({ title: "Görünüm ve yardım" }, groupWrap(themeGroup),
+    h("div", { class: "row" }, h("button", { type: "button", class: "btn", on: { click: () => openGuide() } }, icon("help"), "Kullanım kılavuzunu aç"))));
+  root.appendChild(card({ title: "Yedekleme", sub: "Verilerin yalnızca bu cihazda saklanır. Telefon ve bilgisayar arasında taşımak için yedek indirip diğer cihazda geri yükle." },
+    h("div", { class: "row" },
+      h("button", { type: "button", class: "btn", on: { click: () => exportBackup() } }, icon("download"), "Yedeği indir"),
+      h("label", { for: "settings-backup", class: "btn btn-ghost", attrs: { tabindex: "0", role: "button" }, on: { keydown: filePickerKey } }, icon("upload"), "Yedekten geri yükle"),
+      backupInput),
+    h("p", { class: "muted small", text: "Yapay zekâ anahtarın yedeğe dahil edilmez." })));
+  root.appendChild(card({ title: "Verileri sil" },
+    h("div", { class: "row" },
+      h("button", { type: "button", class: "btn btn-danger", on: { click: () => {
+        confirmDialog("Profil, kayıtlar, plan ve yedeklenmemiş tüm veriler bu cihazdan silinecek. Bu işlem geri alınamaz. Emin misin?", "Tümünü sil").then((ok) => {
+          if (!ok) return;
+          APP.state = defaultState();
+          APP.ui.pfStep = 0; APP.ui.pfBuilder = null;
+          saveState(); applyTheme();
+          toast("Tüm veriler silindi.", "ok");
+          navigate("today");
+        });
+      } } }, icon("trash"), "Tüm verileri sil"))));
+  root.appendChild(h("p", { class: "small muted" }, `Şema sürümü: ${SCHEMA_VERSION} · Tahminler bilgilendirme amaçlıdır, tıbbi öneri değildir.`));
 }
 
 function filePickerKey(e) {
@@ -3950,6 +3980,7 @@ function renderToday(root) {
   const today = todayISO();
   const isFuture = date > today;
 
+  root.appendChild(todayHeader(date));
   root.appendChild(datePager());
 
   const grid = h("div", { class: "grid" });
@@ -3966,18 +3997,27 @@ function renderToday(root) {
   const inProgressSession = sessions.find(function (s) { return s.status === "in_progress"; });
 
   const workoutChildren = [];
-  if (!planDay) {
+  if (!planHasWorkouts() && !inProgressSession && !doneSession) {
     workoutChildren.push(
       emptyState(
-        "Plan yok",
-        "Profilinden haftalık plan oluşturulabilir.",
-        makeButton("Plan oluştur", "btn", function () { navigate("workout", "plan"); })
-      )
+        "Henüz planın yok",
+        "Antrenman → Plan sekmesinden günlerini ve hareketlerini kendin belirle.",
+        makeButton("Planımı kur", "btn btn-primary", function () { navigate("workout", "plan"); })
+      ),
+      makeButton("Plansız antrenman başlat", "btn btn-ghost", function () { startFreeSession(date); saveState(); navigate("workout", "session"); })
     );
-  } else if (planDay.type === "rest") {
+  } else if ((!planDay || planDay.type === "rest") && !inProgressSession && !doneSession) {
     workoutChildren.push(
       h("div", { class: "row" }, h("span", { class: "badge" }, "Dinlenme günü")),
-      h("p", { class: "muted small" }, "Hafif yürüyüş veya esneme yapılabilir.")
+      h("p", { class: "muted small" }, "Hafif yürüyüş veya esneme yapılabilir."),
+      makeButton("Yine de antrenman yap", "btn btn-ghost", function () { startFreeSession(date); saveState(); navigate("workout", "session"); })
+    );
+  } else if (!planDay || planDay.type === "rest") {
+    workoutChildren.push(
+      h("p", { class: "small" }, (inProgressSession || doneSession).title),
+      h("div", { class: "row" },
+        doneSession ? h("span", { class: "badge-ok badge" }, "Tamamlandı") : null,
+        makeButton(doneSession ? "Seansı görüntüle" : "Antrenmana devam et", doneSession ? "btn" : "btn btn-primary", function () { navigate("workout", "session"); }))
     );
   } else {
     workoutChildren.push(h("p", { class: "small" }, planDay.title));
@@ -4310,6 +4350,25 @@ function renderToday(root) {
   grid.appendChild(card({ title: "Günün durumu" }, ...statusChildren));
 }
 
+// Bugün ekranının üstündeki selamlama ve kısa özet.
+function todayHeader(date) {
+  const hr = new Date().getHours();
+  const greet = hr < 6 ? "İyi geceler" : hr < 12 ? "Günaydın" : hr < 18 ? "İyi günler" : "İyi akşamlar";
+  const pd = planDayFor(date);
+  const t = dayTotals(date);
+  const targets = APP.state.nutrition.targets;
+  const chips = [];
+  chips.push(!planHasWorkouts() ? "Plan henüz yok" : pd && pd.type === "workout" ? `Antrenman: ${pd.title}` : "Dinlenme günü");
+  if (targets) chips.push(`Enerji: ${t.count ? fmtNum(t.kcal) : "—"} / ${fmtNum(targets.kcal)} kcal`);
+  const w = currentWeight();
+  if (w != null) chips.push(`Kilo: ${fmtNum(w, 1)} kg`);
+  return h("section", { class: "hello" },
+    h("div", {},
+      h("p", { class: "hello-greet", text: date === todayISO() ? greet + "!" : "Geçmiş gün" }),
+      h("p", { class: "hello-date", text: formatDate(date, true) })),
+    h("div", { class: "hello-chips" }, chips.map(c => h("span", { class: "chip-pill", text: c }))));
+}
+
 // ===== NUTRITION =====
 function renderNutrition(root) {
   clear(root);
@@ -4511,6 +4570,20 @@ function renderNutritionLog(root) {
   });
 
   root.appendChild(addForm);
+  // İnternetten seçilen ürün listeye eklenir ve ekleme formunda seçili hale gelir.
+  root.appendChild(nutOffSearchCard((food) => {
+    if (!foodList.some(f => f.id === food.id)) {
+      foodList.push(food);
+      foodList.sort((a, b) => a.name.localeCompare(b.name, "tr"));
+    }
+    searchInput.value = "";
+    nutBuildFoodOptions(foodSelect, foodList, "", food.id);
+    nutUpdateUnitOptions(food, "g");
+    nutUpdatePreview();
+    toast(`"${food.name}" seçildi. Miktarı girip öğüne ekle.`, "ok");
+    addForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    amountInput.focus({ preventScroll: true });
+  }));
 
   const mealArea = h("div", { class: "stack" });
   SLOTS.forEach(([slotId, slotLabel]) => {
@@ -5148,7 +5221,7 @@ function renderNutritionFoods(root) {
   const dietSelect = selectInput({
     id: "nf-diet",
     value: editingFood?.diet || "plant",
-    options: [["meat", "Et/tavuk"], ["fish", "Balık"], ["egg", "Yumurta"], ["dairy", "Süt ürünü"], ["plant", "Bitkisel"], ["honey", "Bal"]]
+    options: [["meat", "Et/tavuk"], ["fish", "Balık"], ["egg", "Yumurta"], ["dairy", "Süt ürünü"], ["plant", "Bitkisel"], ["honey", "Bal"], ["other", "Bilinmiyor / karışık"]]
   });
   const roleSelect = selectInput({
     id: "nf-role",
@@ -5339,17 +5412,129 @@ function renderNutritionFoods(root) {
   root.appendChild(builtinCard);
 }
 
+// ===== Open Food Facts ile internetten yiyecek arama =====
+// Ücretsiz, anahtarsız. Arama dakikada ~10 istekle sınırlı; bu yüzden yalnızca düğmeyle aranır.
+const OFF_FIELDS = "code,product_name,product_name_tr,brands,nutriments,serving_quantity,allergens_tags";
+const OFF_ALLERGENS = { "en:gluten": "gluten", "en:milk": "milk", "en:eggs": "egg", "en:nuts": "nuts", "en:peanuts": "peanut",
+  "en:soybeans": "soy", "en:fish": "fish", "en:sesame-seeds": "sesame" };
+
+async function offFetch(url) {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);
+    try {
+      const res = await fetch(url, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (res.ok) return await res.json();
+      if (res.status === 404) return null;
+    } catch (e) {
+      clearTimeout(timer);
+    }
+    if (attempt === 0) await new Promise(r => setTimeout(r, 1500));
+  }
+  throw new Error("off-unavailable");
+}
+
+// Ürünü uygulamanın yiyecek biçimine çevirir; besin değerleri eksikse null.
+function offToFood(p) {
+  const n = p.nutriments || {};
+  const num = (v) => (v === "" || v == null || !Number.isFinite(Number(v)) ? null : Number(v));
+  let kcal = num(n["energy-kcal_100g"]);
+  if (kcal == null && num(n["energy_100g"]) != null) kcal = round(num(n["energy_100g"]) / 4.184);
+  const pr = num(n.proteins_100g), fat = num(n.fat_100g), carb = num(n.carbohydrates_100g);
+  const name = String(p.product_name_tr || p.product_name || "").trim();
+  if (!name || kcal == null || pr == null || fat == null || carb == null) return null;
+  const brand = String(p.brands || "").split(",")[0].trim();
+  const serving = num(p.serving_quantity);
+  const k = Math.max(kcal, 1);
+  const role = (pr * 4) / k >= 0.35 ? "protein" : (fat * 9) / k >= 0.6 ? "fat" : "carb";
+  return {
+    id: "c_off_" + String(p.code || uid("x")).replace(/[^0-9a-zA-Z]/g, ""),
+    name: brand && !name.toLocaleLowerCase("tr").includes(brand.toLocaleLowerCase("tr")) ? `${name} (${brand})` : name,
+    state: "ready",
+    per100: { kcal: round(kcal), p: round(pr, 1), f: round(fat, 1), c: round(carb, 1) },
+    portion: serving && serving > 0 && serving <= 2000 ? { label: "1 porsiyon", grams: round(serving) } : null,
+    allergens: (p.allergens_tags || []).map(t => OFF_ALLERGENS[t]).filter(Boolean),
+    diet: "other",
+    role,
+    source: "off"
+  };
+}
+
+async function offSearch(query) {
+  const q = query.trim();
+  if (/^\d{8,14}$/.test(q)) {
+    const data = await offFetch(`https://world.openfoodfacts.org/api/v2/product/${q}?fields=${OFF_FIELDS}`);
+    return data && data.product ? [data.product] : [];
+  }
+  const url = "https://world.openfoodfacts.org/cgi/search.pl?search_simple=1&action=process&json=1&page_size=20&lc=tr"
+    + `&search_terms=${encodeURIComponent(q)}&fields=${OFF_FIELDS}`;
+  const data = await offFetch(url);
+  return (data && data.products) || [];
+}
+
+// Arama kartı. onPick(food): seçilen ürün listene kaydedildikten sonra çağrılır.
+function nutOffSearchCard(onPick) {
+  const input = textInput({ id: "nl-off-q", placeholder: "Ürün adı veya barkod (örn. süzme yoğurt, 8691316520973)", maxlength: 80 });
+  const btn = h("button", { type: "submit", class: "btn btn-primary" }, icon("search"), "Ara");
+  const results = h("div", { class: "stack", attrs: { "aria-live": "polite" } });
+  const form = h("form", { class: "row off-form", attrs: { novalidate: "" } }, input, btn);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    clear(results);
+    if (q.length < 2) { results.append(h("p", { class: "muted small", text: "En az 2 karakter yaz." })); return; }
+    if (navigator.onLine === false) { results.append(h("p", { class: "notice notice-warn", text: "İnternet bağlantısı yok. Yerleşik listeden veya kendi yiyeceklerinden seçebilirsin." })); return; }
+    btn.disabled = true;
+    results.append(h("p", { class: "muted small", text: "Aranıyor…" }));
+    let products;
+    try {
+      products = await offSearch(q);
+    } catch (err) {
+      clear(results);
+      results.append(h("p", { class: "notice notice-warn", text: "Open Food Facts şu an yanıt vermedi. Dakikada en fazla 10 arama yapılabiliyor; biraz sonra tekrar dene." }));
+      btn.disabled = false;
+      return;
+    }
+    btn.disabled = false;
+    clear(results);
+    const foods = products.map(p => ({ p, food: offToFood(p) }));
+    if (!foods.length) { results.append(h("p", { class: "muted small", text: "Sonuç bulunamadı. Farklı bir kelime veya barkod dene." })); return; }
+    const list = h("div", { class: "list" });
+    foods.slice(0, 20).forEach(({ p, food }) => {
+      const name = food ? food.name : String(p.product_name_tr || p.product_name || "Adsız ürün");
+      const sub = food
+        ? `100 g: ${fmtNum(food.per100.kcal)} kcal · P ${fmtNum(food.per100.p, 1)} · Y ${fmtNum(food.per100.f, 1)} · K ${fmtNum(food.per100.c, 1)}${food.portion ? ` · porsiyon ${food.portion.grams} g` : ""}`
+        : "Besin değerleri eksik; eklenemez.";
+      const pick = h("button", { type: "button", class: "btn btn-sm", disabled: food ? undefined : true }, "Seç");
+      if (food) pick.addEventListener("click", () => {
+        const existing = APP.state.customFoods.find(f => f.id === food.id);
+        if (!existing) APP.state.customFoods.push(food);
+        saveState();
+        onPick(existing || food);
+      });
+      list.append(h("div", { class: "list-item" }, h("div", { class: "li-main" }, h("div", { class: "li-title", text: name }), h("div", { class: "li-sub", text: sub })),
+        h("div", { class: "li-actions" }, pick)));
+    });
+    results.append(list);
+  });
+  return card({ title: "İnternette ara", sub: "Listede olmayan paketli ürünleri Open Food Facts veritabanında ara. Seçtiğin ürün kendi yiyeceklerine kaydedilir ve sonra internetsiz de kullanılabilir." },
+    form, results,
+    h("p", { class: "muted small", text: "Değerler üreticilerin ve gönüllülerin girdiği verilerdir; ambalajdaki etiketle karşılaştırman önerilir. Veri: Open Food Facts (ODbL)." }));
+}
+
 // ===== WORKOUT =====
 const woTimer = { total: 0, remaining: 0, running: false, intervalId: null };
 const woEFFORTS = [["easy", "Rahattı"], ["ok", "Uygundu"], ["hard", "Zorlandım"]];
 
 function renderWorkout(root) {
   clear(root);
-  const tabCtrl = tabs("workout", [["session", "Seans"], ["plan", "Plan"], ["history", "Geçmiş"]], "session");
+  const tabCtrl = tabs("workout", [["session", "Seans"], ["plan", "Plan"], ["progress", "Gelişim"], ["history", "Geçmiş"]], "session");
   root.append(tabCtrl.el);
   if (!APP.state || !APP.state.profile) return;
   if (tabCtrl.current === "session") woRenderSession(root);
   else if (tabCtrl.current === "plan") woRenderPlan(root);
+  else if (tabCtrl.current === "progress") woRenderProgress(root);
   else woRenderHistory(root);
 }
 
@@ -5492,14 +5677,17 @@ function woSetRowNumberInput(id, value, min, max, step, placeholder) {
 
 function woSessionNoneCard(root, date) {
   const planDay = planDayFor(date);
-  if (!planDay) {
-    const btn = h("button", { type: "button", class: "btn" }, "Plan sekmesine git");
+  const freeBtn = h("button", { type: "button", class: "btn" }, "Plansız antrenman başlat");
+  freeBtn.addEventListener("click", () => { startFreeSession(date); commit(); });
+  if (!planHasWorkouts()) {
+    const btn = h("button", { type: "button", class: "btn btn-primary" }, "Planımı kur");
     btn.addEventListener("click", () => navigate("workout", "plan"));
-    root.append(emptyState("Plan bulunamadı", "Bu tarih için plan yok. Önce haftalık plan oluşturabilirsin.", btn));
+    root.append(emptyState("Henüz planın yok", "Plan sekmesinden antrenman günlerini ve hareketlerini belirle ya da bugün plansız bir antrenman başlat.",
+      h("div", { class: "row" }, btn, freeBtn)));
     return;
   }
-  if (planDay.type === "rest") {
-    root.append(emptyState("Bu gün dinlenme günü.", "Hafif yürüyüş veya esneme yapılabilir. Plan sekmesinden gün tipini değiştirebilirsin."));
+  if (!planDay || planDay.type === "rest") {
+    root.append(emptyState("Bu gün dinlenme günü.", "Hafif yürüyüş veya esneme yapılabilir. İstersen yine de antrenman başlatabilirsin.", freeBtn));
     return;
   }
   const exList = h("div", { class: "list" });
@@ -5537,10 +5725,14 @@ function woExerciseCard(session, entry) {
       changeSelect = null;
       return;
     }
-    const options = [[entry.exerciseId, entry.name]];
-    alternativesFor(entry.exerciseId, profile).forEach((alt) => options.push([alt.id, alt.name]));
-    changeSelect = h("select", { class: "input", attrs: { "aria-label": "Alternatif hareket seç" } },
-      options.map(([v, l]) => h("option", { value: v, text: l, selected: v === entry.exerciseId })));
+    changeSelect = h("select", { class: "input", attrs: { "aria-label": "Alternatif hareket seç" } });
+    const alts = alternativesFor(entry.exerciseId, profile);
+    if (alts.length) {
+      const g = h("optgroup", { attrs: { label: "Benzer hareketler" } });
+      alts.forEach(a => g.appendChild(h("option", { value: a.id, text: a.name })));
+      changeSelect.appendChild(g);
+    }
+    exerciseSelectOptions(changeSelect, entry.exerciseId);
     changeSelect.addEventListener("change", () => {
       const alt = getExercise(changeSelect.value);
       if (!alt) return;
@@ -5561,8 +5753,12 @@ function woExerciseCard(session, entry) {
   });
   const restBtn = h("button", { type: "button", class: "btn btn-sm" }, `Dinlen (${entry.restSec || 90} sn)`);
   restBtn.addEventListener("click", () => woTimerStart(entry.restSec || 90));
-  head.append(h("div", { class: "row" }, restBtn, changeBtn, removeBtn));
+  const askBtn = h("button", { type: "button", class: "btn btn-sm btn-ghost" }, icon("chat"), "Asistana sor");
+  askBtn.addEventListener("click", () => woAskAssistant(entry.name || (ex ? ex.name : "")));
+  head.append(h("div", { class: "row" }, restBtn, changeBtn, removeBtn, askBtn));
   cardEl.append(head);
+  const pr = exerciseStats(entry.exerciseId, null).allTimePr;
+  if (pr) cardEl.append(h("p", { class: "prev-perf" }, icon("trophy"), ` Rekorun: ${fmtNum(pr.weight, 2)} kg × ${pr.reps} (${formatDate(pr.date)})`));
   if (perf && Array.isArray(perf.sets) && perf.sets.length) {
     const items = perf.sets.map((s) => woFormatSet(s, entry.isBodyweight));
     cardEl.append(h("p", { class: "prev-perf muted" }, `Önceki (${formatDate(perf.date)}): ${items.join(", ")}`));
@@ -5686,9 +5882,7 @@ function woRenderSession(root) {
     const exWrap = h("div", { class: "stack" });
     (session.exercises || []).forEach((entry) => exWrap.append(woExerciseCard(session, entry)));
     const addSelId = "wo-add-ex";
-    const addOptions = [[null, "Hareket seç…"]].concat(availableExercises(profile).map((ex) => [ex.id, ex.name]));
-    const addSelect = selectInput({ id: addSelId, options: addOptions, value: null });
-    addSelect.setAttribute("aria-label", "Eklenecek hareket");
+    const addSelect = exerciseSelectOptions(h("select", { class: "input", id: addSelId, attrs: { "aria-label": "Eklenecek hareket" } }), null, "Hareket seç…");
     const addBtn = h("button", { type: "button", class: "btn" }, "Hareket ekle");
     addBtn.addEventListener("click", () => {
       const ex = getExercise(addSelect.value);
@@ -5712,11 +5906,16 @@ function woRenderSession(root) {
     finishBtn.addEventListener("click", async () => {
       const notDone = (session.exercises || []).some((e) => (e.sets || []).some((s) => !s.done));
       if (notDone && !(await confirmDialog("Tamamlanmamış setler var. Seans yine de bitirilsin mi?"))) return;
+      const prs = newPRsInSession(session);
       session.status = "done";
       session.finishedAt = Date.now();
       woTimerPause();
       commit();
-      toast("Seans kaydedildi.", "ok");
+      if (prs.length) {
+        toast("Yeni rekor! " + prs.map(x => `${x.name}: ${fmtNum(x.weight, 2)} kg (önceki ${fmtNum(x.prev, 2)} kg)`).join(" · "), "ok");
+      } else {
+        toast("Seans kaydedildi.", "ok");
+      }
     });
     const cancelBtn = h("button", { type: "button", class: "btn btn-ghost" }, "Seansı iptal et");
     cancelBtn.addEventListener("click", async () => {
@@ -5817,9 +6016,7 @@ function woPlanExerciseRow(planDay, p, idx) {
     p.restSec = v;
     saveState();
   });
-  const options = [[p.exerciseId, ex ? ex.name : p.exerciseId]].concat(alternativesFor(p.exerciseId, profile).map((a) => [a.id, a.name]));
-  const selId = `wo-psel-${key}`;
-  const sel = selectInput({ id: selId, options, value: p.exerciseId });
+  const sel = exerciseSelectOptions(h("select", { class: "input", id: `wo-psel-${key}` }), p.exerciseId);
   sel.addEventListener("change", () => {
     const alt = getExercise(sel.value);
     if (!alt) return;
@@ -5846,71 +6043,202 @@ function woPlanExerciseRow(planDay, p, idx) {
 
 function woRenderPlan(root) {
   const profile = APP.state.profile;
+  if (!APP.state.plan) { APP.state.plan = emptyPlan(); saveState(); }
   const plan = APP.state.plan;
-  if (!plan) {
-    const btn = h("button", { type: "button", class: "btn btn-primary" }, "Plan oluştur");
-    btn.addEventListener("click", () => {
-      APP.state.plan = generatePlan(profile);
-      commit();
-    });
-    root.append(emptyState("Henüz plan yok", "Profiline göre haftalık antrenman planı oluştur.", btn));
-    return;
-  }
-  const regenBtn = h("button", { type: "button", class: "btn" }, "Planı yeniden oluştur");
-  regenBtn.addEventListener("click", async () => {
-    const ok = await confirmDialog("Haftalık plan profiline göre yeniden oluşturulacak. Plandaki elle yaptığın değişiklikler kaybolur; geçmiş antrenman kayıtların değişmez.", "Yeniden oluştur");
-    if (!ok) return;
+
+  const tplBtn = h("button", { type: "button", class: "btn" }, "Hazır şablonla başla");
+  tplBtn.addEventListener("click", async () => {
+    if (planHasWorkouts()) {
+      const ok = await confirmDialog("Mevcut planın, profiline göre hazırlanan bir şablonla değiştirilecek. Elle yaptığın değişiklikler kaybolur; geçmiş antrenman kayıtların değişmez.", "Şablonu uygula");
+      if (!ok) return;
+    }
     APP.state.plan = generatePlan(profile);
     commit();
+    toast("Şablon uygulandı. Dilediğin gibi düzenleyebilirsin.", "ok");
   });
-  root.append(card({ title: "Haftalık plan", actions: regenBtn }, h("p", { class: "muted" }, "Plan değişiklikleri yalnızca gelecekteki seansları etkiler.")));
-  (plan.days || []).forEach((day, idx) => {
-    const wd = day.weekday || idx + 1;
-    const badge = day.type === "rest" ? h("span", { class: "badge badge-info" }, "Dinlenme") : h("span", { class: "badge badge-ok" }, "Antrenman");
-    const actions = [];
-    const addBtn = () => {};
+  const clearBtn = h("button", { type: "button", class: "btn btn-ghost" }, "Planı temizle");
+  clearBtn.addEventListener("click", async () => {
+    if (!(await confirmDialog("Tüm günler dinlenme günü yapılacak ve plandaki hareketler silinecek. Geçmiş antrenman kayıtların değişmez.", "Temizle"))) return;
+    APP.state.plan = emptyPlan();
+    commit();
+  });
+  root.append(card({ title: "Haftalık planın", sub: "Bir günü antrenman gününe çevir, adını yaz ve hareketlerini ekle. Değişiklikler yalnızca sonraki seansları etkiler." },
+    h("div", { class: "row" }, tplBtn, planHasWorkouts() ? clearBtn : null),
+    planHasWorkouts() ? null : h("p", { class: "muted small", text: "Şablon isteğe bağlıdır: profilindeki gün sayısı, süre ve ekipmana göre bir taslak hazırlar." })));
+
+  plan.days.forEach((day) => {
+    const wd = day.weekday;
     if (day.type === "rest") {
-      const toggle = h("button", { type: "button", class: "btn btn-sm" }, "Antrenman gününe çevir");
+      const toggle = h("button", { type: "button", class: "btn btn-sm" }, icon("plus"), "Antrenman gününe çevir");
       toggle.addEventListener("click", () => {
         day.type = "workout";
-        day.title = "Ek antrenman";
+        day.title = "Antrenman";
+        day.warmup = "5–8 dk hafif kardiyo, eklem mobilitesi ve ilk harekete 1–2 hafif ısınma seti.";
         day.exercises = [];
         commit();
+        const t = document.getElementById(`wo-day-title-${wd}`);
+        if (t) { t.focus(); t.select(); }
       });
-      actions.push(toggle);
-    } else {
-      const toggle = h("button", { type: "button", class: "btn btn-sm" }, "Dinlenme gününe çevir");
-      toggle.addEventListener("click", async () => {
-        if (!(await confirmDialog("Bu gün dinlenme günü yapılsın mı?"))) return;
-        day.type = "rest";
-        day.title = "Dinlenme";
-        day.exercises = [];
-        commit();
-      });
-      actions.push(toggle);
+      root.append(h("section", { class: "card plan-rest" },
+        h("div", { class: "row" }, h("span", { class: "plan-day", text: WEEKDAYS[wd] }), h("span", { class: "badge" }, "Dinlenme"), h("span", { class: "spacer" }), toggle)));
+      return;
     }
-    const body = [];
-    if (day.type === "workout") {
-      if (day.warmup) body.push(h("p", { class: "muted" }, `Isınma: ${day.warmup}`));
-      const exWrap = h("div", { class: "stack" });
-      (day.exercises || []).forEach((p, i) => exWrap.append(woPlanExerciseRow(day, p, i)));
-      body.push(exWrap);
-      const selId = `wo-plan-add-${idx}`;
-      const addOptions = [[null, "Hareket seç…"]].concat(availableExercises(profile).map((ex) => [ex.id, ex.name]));
-      const addSelect = selectInput({ id: selId, options: addOptions, value: null });
-      addSelect.setAttribute("aria-label", "Eklenecek hareket");
-      const addBtn = h("button", { type: "button", class: "btn" }, "Hareket ekle");
-      addBtn.addEventListener("click", () => {
-        const ex = getExercise(addSelect.value);
-        if (!ex) { toast("Eklemek için bir hareket seç.", "err"); return; }
-        const pre = prescription(ex, profile.experience);
-        (day.exercises || (day.exercises = [])).push({ uid: uid("pe"), exerciseId: ex.id, sets: pre.sets, repMin: pre.repMin, repMax: pre.repMax, restSec: pre.restSec });
-        commit();
-      });
-      body.push(h("div", { class: "row" }, addSelect, addBtn));
-    }
-    root.append(card({ title: `${WEEKDAYS[wd]} · ${day.title || (day.type === "rest" ? "Dinlenme" : "Antrenman")}`, actions: actions.length ? h("div", { class: "row" }, badge, ...actions) : null }, ...body));
+    const titleInput = textInput({ id: `wo-day-title-${wd}`, value: day.title, maxlength: 40, placeholder: "Örn. Göğüs-Arka kol" });
+    titleInput.addEventListener("change", () => {
+      const v = titleInput.value.trim();
+      day.title = v || "Antrenman";
+      if (!v) titleInput.value = day.title;
+      saveState();
+    });
+    const toRest = h("button", { type: "button", class: "btn btn-sm btn-ghost" }, "Dinlenme gününe çevir");
+    toRest.addEventListener("click", async () => {
+      if (day.exercises.length && !(await confirmDialog(`${WEEKDAYS[wd]} dinlenme günü yapılsın mı? Bu günün hareketleri plandan silinir.`, "Dinlenme yap"))) return;
+      day.type = "rest"; day.title = "Dinlenme"; day.warmup = ""; day.exercises = [];
+      commit();
+    });
+    const exWrap = h("div", { class: "stack" });
+    day.exercises.forEach((p, i) => exWrap.append(woPlanExerciseRow(day, p, i)));
+    if (!day.exercises.length) exWrap.append(h("p", { class: "muted small", text: "Henüz hareket yok. Aşağıdan ekle." }));
+    const addSelect = exerciseSelectOptions(h("select", { class: "input", id: `wo-plan-add-${wd}`, attrs: { "aria-label": "Eklenecek hareket" } }), null, "Hareket seç…");
+    const addBtn = h("button", { type: "button", class: "btn" }, icon("plus"), "Ekle");
+    addBtn.addEventListener("click", () => {
+      const ex = getExercise(addSelect.value);
+      if (!ex) { toast("Eklemek için bir hareket seç.", "err"); addSelect.focus(); return; }
+      const pre = prescription(ex, profile.experience);
+      day.exercises.push({ uid: uid("pe"), exerciseId: ex.id, sets: pre.sets, repMin: pre.repMin, repMax: pre.repMax, restSec: pre.restSec });
+      commit();
+    });
+    root.append(h("section", { class: "card" },
+      h("div", { class: "row plan-head" }, h("span", { class: "plan-day", text: WEEKDAYS[wd] }), h("span", { class: "badge badge-ok" }, "Antrenman"), h("span", { class: "spacer" }), toRest),
+      h("div", { class: "field" }, h("label", { for: titleInput.id, class: "small muted", text: "Antrenmanın adı" }), titleInput),
+      exWrap,
+      h("div", { class: "row add-row" }, addSelect, addBtn)));
   });
+
+  root.append(woCustomExerciseCard());
+}
+
+// Kullanıcının listede olmayan hareketleri eklediği/sildiği kart.
+function woCustomExerciseCard() {
+  const nameInput = textInput({ id: "wo-cx-name", maxlength: 50, placeholder: "Örn. Smith makinesinde squat" });
+  const patSelect = selectInput({ id: "wo-cx-pattern", value: "other", options: Object.entries(PATTERN_LABELS) });
+  const bwBox = h("input", { type: "checkbox", id: "wo-cx-bw" });
+  const tipInput = textInput({ id: "wo-cx-tip", maxlength: 120, placeholder: "İsteğe bağlı kısa not" });
+  const form = h("form", { class: "form", attrs: { novalidate: "" } },
+    field({ label: "Hareketin adı", input: nameInput }),
+    field({ label: "Kas grubu", input: patSelect }),
+    field({ label: "Not / teknik ipucu", input: tipInput, wide: true }),
+    h("label", { class: "check field wide", for: "wo-cx-bw" }, bwBox, "Vücut ağırlığıyla yapılıyor (ağırlık girmek isteğe bağlı)"),
+    h("div", { class: "form-actions" }, h("button", { type: "submit", class: "btn btn-primary" }, icon("plus"), "Hareketi kaydet")));
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearFieldErrors(form);
+    const name = nameInput.value.trim();
+    if (!name) { setFieldError(nameInput, "Hareketin adını yaz."); nameInput.focus(); return; }
+    if (allExercises().some(x => x.name.toLocaleLowerCase("tr") === name.toLocaleLowerCase("tr"))) {
+      setFieldError(nameInput, "Bu adda bir hareket zaten var."); nameInput.focus(); return;
+    }
+    const isIso = ["shoulder_iso", "arms_bi", "arms_tri", "calf", "core"].includes(patSelect.value);
+    APP.state.customExercises.push({ id: uid("cx"), name, pattern: patSelect.value, equipment: ["bodyweight"],
+      bodyweight: bwBox.checked, compound: !isIso, increment: bwBox.checked ? 0 : 2.5, tip: tipInput.value.trim(), custom: true });
+    commit();
+    toast(`"${name}" eklendi. Hareket listelerinde "Kendi hareketlerim" altında.`, "ok");
+  });
+  const list = h("div", { class: "list" });
+  APP.state.customExercises.forEach(cx => {
+    const del = h("button", { type: "button", class: "btn btn-sm btn-ghost", attrs: { "aria-label": `${cx.name} hareketini sil` } }, icon("trash"));
+    del.addEventListener("click", async () => {
+      if (!(await confirmDialog(`"${cx.name}" listeden silinsin mi? Geçmiş seans kayıtların korunur; plandaki kullanımları kaldırılır.`, "Sil"))) return;
+      APP.state.customExercises = APP.state.customExercises.filter(x => x.id !== cx.id);
+      if (APP.state.plan) APP.state.plan.days.forEach(d => { d.exercises = d.exercises.filter(pe => pe.exerciseId !== cx.id); });
+      commit();
+    });
+    list.append(h("div", { class: "list-item" }, h("div", { class: "li-main" },
+      h("div", { class: "li-title", text: cx.name }), h("div", { class: "li-sub", text: PATTERN_LABELS[cx.pattern] || "Diğer" })), h("div", { class: "li-actions" }, del)));
+  });
+  return card({ title: "Kendi hareketini ekle", sub: "Listede olmayan bir hareketi ekleyip planında ve seanslarında kullanabilirsin." },
+    form,
+    APP.state.customExercises.length ? h("p", { class: "small muted", text: "Eklediğin hareketler:" }) : null,
+    APP.state.customExercises.length ? list : null);
+}
+
+// ===== Gelişim: hareket bazında ağırlık takibi ve rekorlar =====
+function woRenderProgress(root) {
+  const ranges = [["30", "Son 30 gün"], ["90", "Son 3 ay"], ["365", "Son 1 yıl"], ["all", "Tüm zamanlar"]];
+  if (!ranges.some(r => r[0] === APP.ui.woRange)) APP.ui.woRange = "90";
+  const from = APP.ui.woRange === "all" ? null : addDays(todayISO(), -(Number(APP.ui.woRange) - 1));
+  const seg = segGroup({ name: "wo-range", legend: "Dönem", options: ranges, value: APP.ui.woRange });
+  seg.addEventListener("change", (e) => { if (e.target.name === "wo-range") { APP.ui.woRange = e.target.value; rerender(); } });
+  root.append(seg);
+
+  const ids = [];
+  (APP.state.sessions || []).filter(s => s.status === "done").forEach(s => (s.exercises || []).forEach(e => {
+    if (!ids.includes(e.exerciseId) && (e.sets || []).some(st => st.done)) ids.push(e.exerciseId);
+  }));
+  if (!ids.length) {
+    root.append(emptyState("Henüz veri yok", "Seans sekmesinde set kaydedip seansı bitirdiğinde her hareketin rekoru ve gelişimi burada görünür."));
+    return;
+  }
+  const nameOf = (id) => {
+    const ex = getExercise(id);
+    if (ex) return ex.name;
+    for (const s of APP.state.sessions) for (const e of s.exercises || []) if (e.exerciseId === id) return e.name;
+    return id;
+  };
+  const rows = ids.map(id => ({ id, name: nameOf(id), st: exerciseStats(id, from) })).filter(r => r.st.sessions > 0)
+    .sort((a, b) => a.name.localeCompare(b.name, "tr"));
+  if (!rows.length) {
+    root.append(emptyState("Bu dönemde kayıt yok", "Daha uzun bir dönem seçebilirsin."));
+    return;
+  }
+  if (!rows.some(r => r.id === APP.ui.woExercise)) APP.ui.woExercise = rows[0].id;
+
+  const fmtKgReps = (x) => (x ? `${fmtNum(x.weight, 2)} kg × ${x.reps != null ? x.reps : "—"}` : "—");
+  const changeText = (c) => (c == null ? "—" : `${c > 0 ? "+" : ""}${fmtNum(c, 2)} kg`);
+  const list = h("div", { class: "list ex-list" }, rows.map(r => h("button", { type: "button",
+    class: "list-item ex-row" + (r.id === APP.ui.woExercise ? " selected" : ""), attrs: { "aria-pressed": r.id === APP.ui.woExercise ? "true" : "false" },
+    on: { click: () => { APP.ui.woExercise = r.id; rerender(); } } },
+    h("span", { class: "li-main" },
+      h("span", { class: "li-title", text: r.name }),
+      h("span", { class: "li-sub", text: `Rekor ${fmtKgReps(r.st.prWeight)} · 1TM ${r.st.bestE1rm ? fmtNum(r.st.bestE1rm.value, 1) + " kg" : "—"} · ${r.st.sessions} seans` })),
+    h("span", { class: "ex-change " + (r.st.change > 0 ? "up" : r.st.change < 0 ? "down" : ""), text: changeText(r.st.change) }))));
+  root.append(card({ title: "Hareketlerin", sub: "Rekor: dönemdeki en ağır set. 1TM: tahmini 1 tekrar maksimumu. Sağdaki değer ilk ve son seans arasındaki en ağır set farkı. Ayrıntı için harekete dokun." }, list));
+
+  const sel = rows.find(r => r.id === APP.ui.woExercise);
+  const hist = exerciseHistory(sel.id).filter(r => !from || r.date >= from);
+  const weighted = hist.filter(r => r.topWeight != null);
+  const st = sel.st;
+  const stats = h("div", { class: "stats" },
+    woStat("Rekor (PR)", st.prWeight ? `${fmtNum(st.prWeight.weight, 2)} kg` : "—", st.prWeight ? `${st.prWeight.reps} tekrar · ${formatDate(st.prWeight.date)}` : "Ağırlıklı set yok"),
+    woStat("Tahmini 1TM", st.bestE1rm ? `${fmtNum(st.bestE1rm.value, 1)} kg` : "—",
+      st.bestE1rm ? `${fmtNum(st.bestE1rm.weight, 2)} kg × ${st.bestE1rm.reps} setinden (Epley)` : "12 tekrar ve altı setlerden hesaplanır"),
+    woStat("Dönem değişimi", changeText(st.change), st.change != null ? `${fmtKgReps(st.first)} → ${fmtKgReps(st.last)}` : "En az 2 seans gerekir"),
+    st.bestReps ? woStat("En çok tekrar (ağırlıksız)", String(st.bestReps.reps), formatDate(st.bestReps.date)) : null,
+    st.allTimePr && (!st.prWeight || st.allTimePr.weight > st.prWeight.weight)
+      ? woStat("Tüm zamanların rekoru", `${fmtNum(st.allTimePr.weight, 2)} kg`, `${st.allTimePr.reps} tekrar · ${formatDate(st.allTimePr.date)}`) : null);
+  const chart = weighted.length
+    ? lineChart(weighted.map(r => ({ date: r.date, value: r.topWeight })), { unit: "kg", label: "En ağır set", decimals: 1,
+        titleForPoint: (p) => { const r = weighted.find(x => x.date === p.date); return `${fmtNum(p.value, 2)} kg × ${r && r.repsAtTop != null ? r.repsAtTop : "—"}`; } })
+    : lineChart(hist.map(r => ({ date: r.date, value: r.totalReps })), { unit: "tekrar", label: "Toplam tekrar", decimals: 0 });
+  const table = h("div", { class: "table-wrap" }, h("table", { class: "table" },
+    h("thead", {}, h("tr", {}, ["Tarih", "Setler", "En ağır set", "Toplam tekrar"].map(t => h("th", { text: t })))),
+    h("tbody", {}, hist.slice().reverse().map(r => h("tr", {},
+      h("td", { text: formatDate(r.date) }),
+      h("td", { text: r.sets.map(x => woFormatSet(x, !(x.weight > 0))).join(", ") }),
+      h("td", { text: r.topWeight != null ? `${fmtNum(r.topWeight, 2)} kg × ${r.repsAtTop != null ? r.repsAtTop : "—"}` : "—" }),
+      h("td", { text: String(r.totalReps) }))))));
+  root.append(card({ title: sel.name, sub: "Grafik her seanstaki en ağır seti gösterir. Farklı tekrar sayılarındaki ağırlıklar eşdeğer sayılmaz; tekrarı da birlikte değerlendir." },
+    stats, chart, table));
+}
+
+function woStat(label, value, sub) {
+  return h("div", { class: "stat" }, h("div", { class: "stat-label", text: label }), h("div", { class: "stat-value", text: value }),
+    sub ? h("div", { class: "stat-sub", text: sub }) : null);
+}
+
+function woAskAssistant(name) {
+  APP.ui.aiDraft = `"${name}" hareketi nasıl doğru yapılır? Doğru form, sık yapılan hatalar ve güvenlik ipuçları neler?`;
+  navigate("assistant");
 }
 
 function woHistoryDetail(session) {
@@ -5945,7 +6273,7 @@ function woHistoryDetail(session) {
 }
 
 function woRenderHistory(root) {
-  const done = (APP.state.sessions || []).filter((s) => s && s.status === "done").sort((a, b) => (b.startedAt || 0) - (a.startedAt || 0));
+  const done = (APP.state.sessions || []).filter((s) => s && s.status === "done").sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : (b.startedAt || 0) - (a.startedAt || 0)));
   if (!done.length) {
     root.append(emptyState("Henüz tamamlanmış seans yok", "Tamamladığın seanslar burada listelenir."));
     return;
@@ -5953,43 +6281,7 @@ function woRenderHistory(root) {
   const wrap = h("div", { class: "stack" });
   done.forEach((s) => wrap.append(woHistoryDetail(s)));
   root.append(card({ title: "Tamamlanan seanslar" }, wrap));
-  const uniqueIds = [];
-  done.forEach((s) => (s.exercises || []).forEach((e) => {
-    if (e.exerciseId && !uniqueIds.includes(e.exerciseId)) uniqueIds.push(e.exerciseId);
-  }));
-  const histWrap = h("div", { class: "stack" });
-  if (!uniqueIds.length) {
-    histWrap.append(h("p", { class: "muted" }, "Kayıt yok"));
-  } else {
-    const selId = "wo-hist-ex";
-    const options = uniqueIds.map((id) => [id, getExercise(id)?.name || id]);
-    const sel = selectInput({ id: selId, options, value: uniqueIds[0] });
-    const listWrap = h("div", { class: "stack" });
-    const renderHist = () => {
-      clear(listWrap);
-      const rows = exerciseHistory(sel.value) || [];
-      if (!rows.length) {
-        listWrap.append(h("p", { class: "muted" }, "Kayıt yok"));
-        return;
-      }
-      rows.forEach((r) => {
-        const ex = getExercise(sel.value);
-        let top;
-        if (r.topWeight == null) top = ex && ex.bodyweight ? "VA" : "—";
-        else top = (ex && ex.bodyweight && r.topWeight > 0 ? "+" : "") + fmtNum(r.topWeight, 1) + " kg";
-        listWrap.append(h("div", { class: "list-item" }, h("div", { class: "li-main" },
-          h("div", { class: "li-title" }, formatDate(r.date)),
-          h("div", { class: "li-sub" }, `${top} × ${r.repsAtTop != null ? fmtNum(r.repsAtTop, 0) : "—"} tekrar`),
-          h("div", { class: "li-sub muted" }, `Toplam tekrar: ${r.totalReps != null ? fmtNum(r.totalReps, 0) : "—"}`)
-        )));
-      });
-    };
-    renderHist();
-    sel.addEventListener("change", renderHist);
-    histWrap.append(sel, listWrap);
-  }
-  histWrap.append(h("p", { class: "muted small" }, "Farklı tekrar sayılarındaki ağırlıklar doğrudan karşılaştırılamaz; ağırlık ve tekrarı birlikte değerlendir."));
-  root.append(card({ title: "Hareket geçmişi" }, histWrap));
+  root.append(h("p", { class: "muted small" }, "Hareket bazında rekorlar ve ağırlık gelişimi için Gelişim sekmesine bak."));
 }
 
 // ===== PROGRESS =====
@@ -6252,299 +6544,185 @@ function barChart(points, opts) {
 function renderProgress(root) {
   clear(root);
   if (!APP.state.profile) return;
-
-  if (!APP.ui.prRange || !["7", "30", "all"].includes(APP.ui.prRange)) APP.ui.prRange = "30";
+  const profile = APP.state.profile;
+  const ranges = [["7", "Son 7 gün"], ["30", "Son 30 gün"], ["90", "Son 3 ay"], ["all", "Tüm zamanlar"]];
+  if (!ranges.some(r => r[0] === APP.ui.prRange)) APP.ui.prRange = "30";
   const to = todayISO();
   const from = APP.ui.prRange === "all" ? null : addDays(to, -(Number(APP.ui.prRange) - 1));
 
-  const rangeSeg = segGroup({
-    name: "prRange",
-    legend: "Aralık",
-    value: APP.ui.prRange,
-    options: [["7", "Son 7 gün"], ["30", "Son 30 gün"], ["all", "Tüm zamanlar"]]
-  });
-  rangeSeg.querySelectorAll("input").forEach(inp => {
-    inp.addEventListener("change", () => {
-      APP.ui.prRange = inp.value;
-      rerender();
-    });
-  });
+  root.appendChild(prEntryCard(to));
+
+  const rangeSeg = segGroup({ name: "prRange", legend: "Grafik aralığı", value: APP.ui.prRange, options: ranges });
+  rangeSeg.addEventListener("change", (e) => { if (e.target.name === "prRange") { APP.ui.prRange = e.target.value; rerender(); } });
   root.appendChild(rangeSeg);
 
-  const entries = weightsInRange(from, to) || [];
-  const editDate = APP.ui.prEditDate || APP.ui.date || to;
-  const existingEntry = (APP.state.weights || []).find(w => w.date === editDate) || null;
-
-  const weightForm = h("form", { class: "form", attrs: { novalidate: "true" } });
-  const dateInput = h("input", { class: "input", type: "date", id: "pr-weight-date", value: editDate, max: to });
-  const kgInput = numberInput({
-    id: "pr-weight-kg",
-    value: existingEntry ? existingEntry.kg : "",
-    min: 30,
-    max: 300,
-    step: "0.1",
-    placeholder: "Örn. 78,5"
-  });
-  const waistInput = numberInput({
-    id: "pr-weight-waist",
-    value: existingEntry && existingEntry.waistCm != null ? existingEntry.waistCm : "",
-    min: 40,
-    max: 200,
-    step: "0.1",
-    placeholder: "İsteğe bağlı"
-  });
-  const saveBtn = h("button", { class: "btn btn-primary", type: "submit" }, existingEntry ? "Kaydı güncelle" : "Kaydet");
-
-  weightForm.appendChild(field({
-    label: "Tarih",
-    input: dateInput,
-    hint: "Aynı tarihteki kayıt varsa güncellenir."
-  }));
-  weightForm.appendChild(field({
-    label: "Kilo (kg)",
-    input: kgInput,
-    hint: "30–300 arası"
-  }));
-  weightForm.appendChild(field({
-    label: "Bel çevresi (cm)",
-    input: waistInput,
-    hint: "İsteğe bağlı, 40–200 arası"
-  }));
-  const actions = h("div", { class: "form-actions" }, saveBtn);
-  weightForm.appendChild(actions);
-
-  function prPrefillWeightDate(iso) {
-    if (!iso || iso > to) return;
-    dateInput.value = iso;
-    const entry = (APP.state.weights || []).find(w => w.date === iso) || null;
-    kgInput.value = entry ? String(entry.kg) : "";
-    waistInput.value = entry && entry.waistCm != null ? String(entry.waistCm) : "";
-    saveBtn.textContent = entry ? "Kaydı güncelle" : "Kaydet";
-    clearFieldErrors(weightForm);
-  }
-
-  dateInput.addEventListener("change", () => {
-    APP.ui.prEditDate = null;
-    if (dateInput.value && dateInput.value <= to) {
-      APP.ui.date = dateInput.value;
-      prPrefillWeightDate(dateInput.value);
-    } else {
-      kgInput.value = "";
-      waistInput.value = "";
-      saveBtn.textContent = "Kaydet";
-    }
-  });
-
-  weightForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    clearFieldErrors(weightForm);
-
-    const iso = dateInput.value;
-    if (!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso) || iso > to) {
-      setFieldError(dateInput, "Bugünden sonraki tarih girilemez.");
-      return;
-    }
-
-    const kg = parseNum(kgInput.value);
-    if (kg === null || Number.isNaN(kg) || kg < 30 || kg > 300) {
-      setFieldError(kgInput, "Kilo 30–300 kg aralığında olmalı.");
-      return;
-    }
-
-    let waistCm = null;
-    const waistRaw = waistInput.value == null ? "" : String(waistInput.value).trim();
-    if (waistRaw !== "") {
-      waistCm = parseNum(waistRaw);
-      if (waistCm === null || Number.isNaN(waistCm) || waistCm < 40 || waistCm > 200) {
-        setFieldError(waistInput, "Bel çevresi 40–200 cm aralığında olmalı.");
-        return;
-      }
-    }
-
-    const exists = (APP.state.weights || []).some(w => w.date === iso);
-    upsertWeight(iso, Number(kg), waistCm);
-    APP.ui.prEditDate = null;
-    APP.ui.date = iso;
-    commit();
-    toast(exists ? "Kilo kaydı güncellendi." : "Kilo kaydı eklendi.", "ok");
-  });
-
-  const latest10 = (APP.state.weights || []).slice(-10).reverse();
-  const list = h("div", { class: "list" });
-  if (latest10.length === 0) {
-    list.appendChild(h("div", { class: "list-item" }, h("div", { class: "li-main" }, h("div", { class: "li-title" }, "Kayıt yok"), h("div", { class: "li-sub muted" }, "Yukarıdan ilk kaydını ekleyebilirsin."))));
-  } else {
-    for (const w of latest10) {
-      const item = h("div", { class: "list-item" },
-        h("div", { class: "li-main" },
-          h("div", { class: "li-title" }, `${formatDate(w.date, true)} — ${fmtNum(w.kg, 1)} kg`),
-          h("div", { class: "li-sub muted" }, `Bel: ${w.waistCm == null ? "—" : fmtNum(w.waistCm, 1) + " cm"}`)
-        ),
-        h("div", { class: "li-actions" })
-      );
-      const editBtn = h("button", { class: "btn btn-sm btn-ghost", type: "button", attrs: { "aria-label": "Kaydı düzenle" } }, h("span", {}, "Düzenle"));
-      editBtn.addEventListener("click", () => {
-        APP.ui.prEditDate = w.date;
-        APP.ui.date = w.date;
-        rerender();
-      });
-      const delBtn = h("button", { class: "btn btn-sm btn-danger", type: "button", attrs: { "aria-label": "Kaydı sil" } }, h("span", {}, "Sil"));
-      delBtn.addEventListener("click", async () => {
-        const ok = await confirmDialog(`${formatDate(w.date, true)} tarihli kilo kaydı silinsin mi?`, "Sil");
-        if (!ok) return;
-        const idx = (APP.state.weights || []).findIndex(x => x.date === w.date);
-        if (idx >= 0) {
-          APP.state.weights.splice(idx, 1);
-          if (APP.ui.prEditDate === w.date) APP.ui.prEditDate = null;
-          commit();
-          toast("Kayıt silindi.", "ok");
-        }
-      });
-      item.querySelector(".li-actions").appendChild(editBtn);
-      item.querySelector(".li-actions").appendChild(delBtn);
-      list.appendChild(item);
-    }
-  }
-
-  root.appendChild(card({ title: "Kilo ve bel çevresi kaydı", sub: "Aynı tarihte yalnızca bir kayıt tutulur." }, weightForm, prChartNote("Son 10 kayıt:"), list));
-
+  // --- Kilo ---
+  const entries = weightsInRange(from, to);
   const weightPoints = entries.map(w => ({ date: w.date, value: w.kg }));
-  const avg7Points = entries
-    .map(w => ({ date: w.date, value: avg7Weight(w.date) }))
-    .filter(p => p.value != null && Number.isFinite(Number(p.value)));
-
+  const avg7Points = entries.map(w => ({ date: w.date, value: avg7Weight(w.date) })).filter(p => p.value != null);
   const lastWeight = entries.length ? entries[entries.length - 1] : null;
   const avg7Today = avg7Weight(to);
-  const weightCard = card({ title: "Kilo", sub: "Kayıt olmayan günler grafikte boş bırakılır." },
-    lineChart(weightPoints, {
-      unit: "kg",
-      label: "Kilo",
-      series2: avg7Points.length ? avg7Points : null,
-      label2: "7 günlük ortalama",
-      decimals: 1
-    }),
+  root.appendChild(card({ title: "Kilo", sub: "Kayıt olmayan günler grafikte boş bırakılır." },
+    lineChart(weightPoints, { unit: "kg", label: "Kilo", series2: avg7Points.length ? avg7Points : null, label2: "7 günlük ortalama", decimals: 1 }),
     h("div", { class: "stats" },
       prStat("Son kayıt", lastWeight ? `${fmtNum(lastWeight.kg, 1)} kg` : "—", lastWeight ? formatDate(lastWeight.date) : "Bu aralıkta kayıt yok"),
       prStat("7 günlük ortalama", avg7Today != null ? `${fmtNum(avg7Today, 1)} kg` : "Yetersiz veri", avg7Today == null ? "Son 7 günde en az 3 kayıt gerekir" : ""),
-      prStat("Hedef kilo", APP.state.profile.targetWeightKg != null ? `${fmtNum(APP.state.profile.targetWeightKg, 1)} kg` : "—")
-    )
-  );
-  root.appendChild(weightCard);
+      prStat("Hedef kilo", profile.targetWeightKg != null ? `${fmtNum(profile.targetWeightKg, 1)} kg` : "—"))));
 
-  const waistPoints = entries.filter(w => w.waistCm != null).map(w => ({ date: w.date, value: w.waistCm }));
-  if (waistPoints.length > 0) {
-    root.appendChild(card({ title: "Bel çevresi", sub: "Kayıt olmayan günler grafikte boş bırakılır." }, lineChart(waistPoints, { unit: "cm", label: "Bel çevresi", decimals: 1 })));
-  }
+  // --- Tahmini yağ oranı ---
+  root.appendChild(prBodyFatCard(from, to));
 
+  // --- Vücut ölçüleri ---
+  root.appendChild(prMeasuresCard(from, to));
+
+  // --- Haftalık antrenman ---
   const weekSessions = (sessionsPerWeek(from, to) || []).map(w => ({ label: formatDate(w.weekStart), value: w.count == null ? 0 : w.count }));
-  root.appendChild(card({ title: "Haftalık tamamlanan antrenman", sub: "Hafta başına tamamlanan seans." }, barChart(weekSessions, { label: "Tamamlanan seans", unit: "seans", decimals: 0 })));
+  root.appendChild(card({ title: "Haftalık tamamlanan antrenman", sub: "Hafta başına tamamlanan seans. Hareket bazında rekorlar için Antrenman → Gelişim." },
+    barChart(weekSessions, { label: "Tamamlanan seans", unit: "seans", decimals: 0 })));
 
-  const doneExerciseIds = [];
-  const seenEx = new Set();
-  (APP.state.sessions || []).filter(s => s && s.status === "done" && Array.isArray(s.exercises)).forEach(session => {
-    session.exercises.forEach(ex => {
-      if (!ex || !ex.exerciseId) return;
-      if (!seenEx.has(ex.exerciseId)) {
-        seenEx.add(ex.exerciseId);
-        doneExerciseIds.push(ex.exerciseId);
-      }
+  // --- Su, adım, uyku ---
+  [{ field: "waterMl", title: "Su", unit: "ml", decimals: 0 }, { field: "steps", title: "Adım", unit: "adım", decimals: 0 },
+   { field: "sleepHours", title: "Uyku", unit: "saat", decimals: 1 }].forEach(m => {
+    const series = metricSeries(m.field, from, to);
+    let line = "Kayıt olmayan günler grafikte boş bırakılır.";
+    if (series.length) line += ` ${series.length} günlük kayıt, ortalama ${fmtNum(series.reduce((s, p) => s + p.value, 0) / series.length, m.decimals)} ${m.unit}.`;
+    root.appendChild(card({ title: m.title, sub: "Günlük kayıtlar." }, lineChart(series, { unit: m.unit, label: m.title, decimals: m.decimals }), prChartNote(line)));
+  });
+}
+
+// Kilo + vücut ölçüleri kayıt formu ve son kayıtlar.
+function prEntryCard(to) {
+  const editDate = APP.ui.prEditDate || (APP.ui.date <= to ? APP.ui.date : to);
+  const wEntry = APP.state.weights.find(w => w.date === editDate) || null;
+  const mEntry = APP.state.measurements.find(m => m.date === editDate) || null;
+  const dateInput = h("input", { class: "input", type: "date", id: "pr-date", value: editDate, max: to });
+  const kgInput = numberInput({ id: "pr-kg", value: wEntry ? wEntry.kg : null, step: 0.1, placeholder: "Örn. 78,5" });
+  const mInputs = {};
+  MEASURES.forEach(([k]) => { mInputs[k] = numberInput({ id: `pr-${k}`, value: mEntry ? mEntry[k] : null, step: 0.1, placeholder: "cm" }); });
+
+  const form = h("form", { class: "form", attrs: { novalidate: "" } },
+    field({ label: "Tarih", input: dateInput }),
+    field({ label: "Kilo (kg)", input: kgInput }),
+    h("p", { class: "field wide small muted", text: "Vücut ölçüleri (cm) — hepsi isteğe bağlı. Mezurayı sıkmadan, her seferinde aynı noktadan ölç." }),
+    MEASURES.map(([k, label]) => field({ label, input: mInputs[k] })),
+    h("details", { class: "field wide measure-help" }, h("summary", { text: "Nereden ölçülür?" }),
+      h("ul", { class: "small" },
+        ["Bel: göbek deliği hizasından, nefesi normal verdikten sonra.", "Boyun: gırtlağın hemen altından, mezura hafif aşağı eğimli.",
+         "Kalça: kalçanın en geniş yerinden.", "Göğüs: meme ucu hizasından.", "Omuz genişliği: iki omuz başının en dış noktaları arasındaki çevre.",
+         "Kol: pazının en kalın yerinden, kol gevşek.", "Uyluk: kasığın biraz altından, en kalın yerinden.", "Baldır: en kalın yerinden."]
+          .map(t => h("li", { text: t })))),
+    h("div", { class: "form-actions" }, h("button", { type: "submit", class: "btn btn-primary" }, wEntry || mEntry ? "Kaydı güncelle" : "Kaydet")));
+
+  dateInput.addEventListener("change", () => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateInput.value) && dateInput.value <= to) { APP.ui.prEditDate = dateInput.value; rerender(); }
+  });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearFieldErrors(form);
+    const iso = dateInput.value;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || iso > to) { setFieldError(dateInput, "Bugünden sonraki bir tarih girilemez."); dateInput.focus(); return; }
+    let first = null;
+    const kg = parseNum(kgInput.value);
+    if (kg != null && (!Number.isFinite(kg) || kg < 25 || kg > 350)) { setFieldError(kgInput, "Kiloyu kilogram olarak gir (örn. 78,5)."); first = first || kgInput; }
+    const vals = {};
+    MEASURES.forEach(([k, label]) => {
+      const v = parseNum(mInputs[k].value);
+      if (v != null && (!Number.isFinite(v) || v < 10 || v > 250)) { setFieldError(mInputs[k], `${label} ölçüsünü santimetre olarak gir.`); first = first || mInputs[k]; }
+      vals[k] = v;
     });
+    if (first) { first.focus(); return; }
+    const anyMeasure = MEASURES.some(([k]) => vals[k] != null);
+    if (kg == null && !anyMeasure && !wEntry && !mEntry) { setFieldError(kgInput, "Kaydetmek için en az bir değer gir."); kgInput.focus(); return; }
+    // Formdaki boş alan, o tarihteki değeri siler (form o günün mevcut değerleriyle doldurulur).
+    if (kg != null) upsertWeight(iso, kg);
+    else { const i = APP.state.weights.findIndex(w => w.date === iso); if (i >= 0) APP.state.weights.splice(i, 1); }
+    upsertMeasurement(iso, vals);
+    APP.ui.prEditDate = null;
+    commit();
+    toast(wEntry || mEntry ? "Kayıt güncellendi." : "Kayıt eklendi.", "ok");
   });
 
-  let exerciseOptions = doneExerciseIds
-    .map(id => getExercise(id))
-    .filter(Boolean)
-    .map(ex => [ex.id, ex.name]);
+  // Son kayıtlar (kilo ve ölçüler tarih bazında birlikte).
+  const dates = Array.from(new Set(APP.state.weights.map(w => w.date).concat(APP.state.measurements.map(m => m.date)))).sort().reverse().slice(0, 8);
+  const list = h("div", { class: "list" });
+  dates.forEach(d => {
+    const w = APP.state.weights.find(x => x.date === d);
+    const m = APP.state.measurements.find(x => x.date === d);
+    const parts = [];
+    if (w) parts.push(`${fmtNum(w.kg, 1)} kg`);
+    if (m) MEASURES.forEach(([k, label]) => { if (m[k] != null) parts.push(`${label} ${fmtNum(m[k], 1)}`); });
+    const edit = h("button", { type: "button", class: "btn btn-sm btn-ghost" }, "Düzenle");
+    edit.addEventListener("click", () => { APP.ui.prEditDate = d; rerender(); window.scrollTo(0, 0); });
+    const del = h("button", { type: "button", class: "btn btn-sm btn-ghost", attrs: { "aria-label": `${formatDate(d, true)} kaydını sil` } }, icon("trash"));
+    del.addEventListener("click", async () => {
+      if (!(await confirmDialog(`${formatDate(d, true)} tarihli kilo ve ölçü kaydı silinsin mi?`, "Sil"))) return;
+      APP.state.weights = APP.state.weights.filter(x => x.date !== d);
+      APP.state.measurements = APP.state.measurements.filter(x => x.date !== d);
+      if (APP.ui.prEditDate === d) APP.ui.prEditDate = null;
+      commit();
+      toast("Kayıt silindi.", "ok");
+    });
+    list.append(h("div", { class: "list-item" },
+      h("div", { class: "li-main" }, h("div", { class: "li-title", text: formatDate(d, true) }), h("div", { class: "li-sub", text: parts.join(" · ") || "—" })),
+      h("div", { class: "li-actions" }, edit, del)));
+  });
 
-  if (exerciseOptions.length === 0) {
-    root.appendChild(card({ title: "Hareket gelişimi", sub: "Tamamlanan seanslardaki ağırlık ve tekrar geçmişi." }, emptyState("Antrenman geçmişi yok", "Önce bir seansı tamamla; sonra gelişimini burada gör.")));
+  return card({ title: "Kilo ve vücut ölçüsü kaydı", sub: "Her tarih için tek kayıt tutulur; aynı tarihi seçersen mevcut kaydı düzenlersin." },
+    form, dates.length ? h("h3", { class: "small muted sub-head", text: "Son kayıtlar" }) : null, dates.length ? list : null);
+}
+
+function prBodyFatCard(from, to) {
+  const p = APP.state.profile;
+  const all = APP.state.measurements.map(m => ({ date: m.date, value: navyBodyFat(p.sex, p.heightCm, m), m }));
+  const valid = all.filter(x => x.value != null);
+  const latestM = APP.state.measurements.length ? APP.state.measurements[APP.state.measurements.length - 1] : null;
+  const missing = bodyFatMissing(p.sex, latestM);
+  const children = [];
+  if (!valid.length) {
+    children.push(h("div", { class: "notice notice-info" },
+      h("p", { text: missing.length ? `Hesaplamak için gereken: ${missing.join(", ")}.` : "Bu ölçülerle geçerli bir sonuç çıkmadı; ölçüleri kontrol et." }),
+      h("p", { class: "small", text: p.sex === "female" ? "Kadınlar için bel, boyun ve kalça ölçüsü ile boy kullanılır." : p.sex === "male" ? "Erkekler için bel ve boyun ölçüsü ile boy kullanılır." : "Profilinde cinsiyeti seçersen hesaplanabilir." })));
   } else {
-    if (!APP.ui.prExercise || !exerciseOptions.some(o => o[0] === APP.ui.prExercise)) {
-      APP.ui.prExercise = exerciseOptions[0][0];
-    }
-    const exSelect = selectInput({
-      id: "pr-exercise",
-      options: exerciseOptions,
-      value: APP.ui.prExercise
-    });
-    exSelect.setAttribute("aria-label", "Hareket seç");
-    exSelect.addEventListener("change", () => {
-      APP.ui.prExercise = exSelect.value;
-      rerender();
-    });
-
-    const history = exerciseHistory(APP.ui.prExercise) || [];
-    const weighted = history.filter(x => x.topWeight != null && Number.isFinite(Number(x.topWeight)));
-    const bodyOnly = history.length > 0 && weighted.length === 0;
-
-    let chart;
-    let table = null;
-
-    if (history.length === 0) {
-      chart = emptyState("Bu hareket için kayıt yok", "Tamamlanan seanslarda bu hareket girmemiş.");
-    } else {
-      const pts = bodyOnly
-        ? history.filter(x => x.totalReps != null).map(x => ({ date: x.date, value: Number(x.totalReps) }))
-        : weighted.map(x => ({ date: x.date, value: Number(x.topWeight) }));
-
-      const chartOpts = bodyOnly
-        ? { unit: "tekrar", label: "Toplam tekrar", decimals: 0 }
-        : {
-            unit: "kg",
-            label: "En yüksek ağırlık",
-            decimals: 1,
-            titleForPoint: p => {
-              const row = history.find(x => x.date === p.date) || {};
-              const reps = row.repsAtTop != null ? Number(row.repsAtTop) : Number(p.value);
-              return `${fmtNum(p.value, 1)} kg × ${fmtNum(reps, 0)}`;
-            }
-          };
-
-      chart = lineChart(pts, chartOpts);
-
-      const rows = history.map(row => h("tr", {},
-        h("td", {}, formatDate(row.date)),
-        h("td", {}, row.topWeight == null ? "—" : `${fmtNum(row.topWeight, 1)} kg`),
-        h("td", {}, row.repsAtTop == null ? "—" : fmtNum(row.repsAtTop, 0)),
-        h("td", {}, row.totalReps == null ? "—" : fmtNum(row.totalReps, 0))
-      ));
-      table = h("div", { class: "table-wrap" }, h("table", { class: "table" },
-        h("thead", {}, h("tr", {},
-          h("th", {}, "Tarih"),
-          h("th", {}, "En yüksek ağırlık"),
-          h("th", {}, "O ağırlıkta tekrar"),
-          h("th", {}, "Toplam tekrar")
-        )),
-        h("tbody", {}, rows)
-      ));
-    }
-
-    root.appendChild(card({ title: "Hareket gelişimi", sub: "Tamamlanan seanslardaki en yüksek ağırlık ve tekrar." },
-      exSelect,
-      chart,
-      table,
-      prChartNote("Farklı tekrar sayılarındaki ağırlıklar eşdeğer performans sayılmaz; ağırlığı ve tekrarı birlikte değerlendir.")
-    ));
+    const last = valid[valid.length - 1];
+    const inRange = valid.filter(x => (!from || x.date >= from) && x.date <= to);
+    const firstR = inRange.length ? inRange[0] : null;
+    const kg = APP.state.weights.filter(w => w.date <= last.date).slice(-1)[0];
+    const fatKg = kg ? round(kg.kg * last.value / 100, 1) : null;
+    children.push(h("div", { class: "stats" },
+      prStat("Tahmini yağ oranı", `%${fmtNum(last.value, 1)}`, formatDate(last.date)),
+      prStat("Yağ / yağsız kütle", fatKg != null ? `${fmtNum(fatKg, 1)} / ${fmtNum(kg.kg - fatKg, 1)} kg` : "—", fatKg != null ? `${fmtNum(kg.kg, 1)} kg kiloya göre` : "Kilo kaydı gerekir"),
+      prStat("Dönem değişimi", firstR && inRange.length >= 2 ? `${last.value - firstR.value > 0 ? "+" : ""}${fmtNum(round(last.value - firstR.value, 1), 1)} puan` : "—",
+        inRange.length >= 2 ? `${formatDate(firstR.date)} → ${formatDate(last.date)}` : "En az 2 ölçüm gerekir")));
+    children.push(lineChart(inRange.map(x => ({ date: x.date, value: x.value })), { unit: "%", label: "Tahmini yağ oranı", decimals: 1 }));
   }
+  children.push(prChartNote("ABD Donanması çevre ölçüsü yöntemiyle tahmin edilir; gerçek değerden birkaç puan sapabilir. Eğilimi takip etmek için her seferinde aynı koşullarda ölç."));
+  return card({ title: "Tahmini yağ oranı", sub: "Boy, bel, boyun (kadınlarda kalça) ölçülerinden hesaplanır." }, ...children);
+}
 
-  const metricDefs = [
-    { field: "waterMl", title: "Su", unit: "ml", decimals: 0 },
-    { field: "steps", title: "Adım", unit: "adım", decimals: 0 },
-    { field: "sleepHours", title: "Uyku", unit: "saat", decimals: 1 }
-  ];
-
-  for (const m of metricDefs) {
-    const series = (metricSeries(m.field, from, to) || []).map(x => ({ date: x.date, value: Number(x.value) }));
-    let avgLine = "Kayıt olmayan günler grafikte boş bırakılır.";
-    if (series.length > 0) {
-      const avg = series.reduce((s, p) => s + p.value, 0) / series.length;
-      avgLine = `Kayıt olmayan günler grafikte boş bırakılır. ${series.length} günlük kayıt, ortalama ${fmtNum(avg, m.decimals)} ${m.unit}.`;
-    }
-    root.appendChild(card({ title: m.title, sub: "Günlük kayıtlar." },
-      lineChart(series, { unit: m.unit, label: m.title, decimals: m.decimals }),
-      prChartNote(avgLine)
-    ));
+function prMeasuresCard(from, to) {
+  const list = measurementsInRange(from, to);
+  const allList = APP.state.measurements;
+  if (!allList.length) {
+    return card({ title: "Vücut ölçüleri" }, emptyState("Henüz ölçü kaydı yok", "Yukarıdaki formdan bel, kol, omuz gibi ölçülerini girebilirsin."));
   }
+  const keysWithData = MEASURES.filter(([k]) => allList.some(m => m[k] != null));
+  if (!keysWithData.some(([k]) => k === APP.ui.prMeasure)) APP.ui.prMeasure = keysWithData[0][0];
+  const rows = keysWithData.map(([k, label]) => {
+    const vals = list.filter(m => m[k] != null);
+    const lastAll = allList.filter(m => m[k] != null).slice(-1)[0];
+    const change = vals.length >= 2 ? round(vals[vals.length - 1][k] - vals[0][k], 1) : null;
+    return h("tr", { class: k === APP.ui.prMeasure ? "selected" : "" },
+      h("td", {}, h("button", { type: "button", class: "linklike", on: { click: () => { APP.ui.prMeasure = k; rerender(); } } }, label)),
+      h("td", { text: lastAll ? `${fmtNum(lastAll[k], 1)} cm` : "—" }),
+      h("td", { class: change > 0 ? "up" : change < 0 ? "down" : "", text: change == null ? "—" : `${change > 0 ? "+" : ""}${fmtNum(change, 1)} cm` }),
+      h("td", { text: lastAll ? formatDate(lastAll.date) : "—" }));
+  });
+  const label = (MEASURES.find(([k]) => k === APP.ui.prMeasure) || [null, ""])[1];
+  return card({ title: "Vücut ölçüleri", sub: "Değişim, seçili aralıktaki ilk ve son ölçüm arasındaki farktır. Grafik için ölçüye dokun." },
+    h("div", { class: "table-wrap" }, h("table", { class: "table" },
+      h("thead", {}, h("tr", {}, ["Ölçü", "Son değer", "Değişim", "Son ölçüm"].map(t => h("th", { text: t })))), h("tbody", {}, rows))),
+    h("h3", { class: "small muted sub-head", text: label }),
+    lineChart(list.filter(m => m[APP.ui.prMeasure] != null).map(m => ({ date: m.date, value: m[APP.ui.prMeasure] })), { unit: "cm", label, decimals: 1 }));
 }
 
 function renderReview(root) {
@@ -6661,6 +6839,388 @@ function prChartWidth() {
   const w = view ? view.clientWidth - 66 : 640;
   return Math.max(280, Math.min(1000, Math.round(w || 640)));
 }
+
+// ===== ASSISTANT =====
+// ===== Yapay zekâ asistanı (Google Gemini, kullanıcının kendi ücretsiz anahtarıyla) =====
+// Anahtar yalnızca bu cihazın tarayıcısında, ayrı bir anahtarda saklanır; yedeğe dahil edilmez.
+const AI_KEY_STORAGE = "fitnessApp.geminiKey";
+const AI_BASE = "https://generativelanguage.googleapis.com/v1beta";
+const AI_SYSTEM = [
+  "Sen Türkçe konuşan, sakin ve pratik bir fitness asistanısın. Kullanıcı kişisel bir antrenman ve beslenme takip uygulaması kullanıyor.",
+  "Hareketlerin nasıl yapılacağını adım adım, doğru form, sık yapılan hatalar ve güvenlik ipuçlarıyla anlat.",
+  "Kısa ve net ol; gerekirse madde işaretleri kullan. Bilmediğin bir şeyi uydurma.",
+  "Tıbbi teşhis veya tedavi önerme. Ağrı, yaralanma, hastalık, gebelik veya ilaç gibi konularda bir hekime ya da fizyoterapiste danışmasını öner.",
+  "Aşırı kalori kısıtlaması, takviye dozları veya ilaç konusunda kesin yönlendirme yapma."
+].join(" ");
+
+function aiGetKey() {
+  try { return localStorage.getItem(AI_KEY_STORAGE) || ""; } catch (e) { return ""; }
+}
+
+function aiSetKey(k) {
+  try {
+    if (k) localStorage.setItem(AI_KEY_STORAGE, k); else localStorage.removeItem(AI_KEY_STORAGE);
+    return true;
+  } catch (e) { return false; }
+}
+
+async function aiRequest(path, key, body) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 45000);
+  let res;
+  try {
+    res = await fetch(`${AI_BASE}/${path}`, {
+      method: body ? "POST" : "GET",
+      headers: Object.assign({ "x-goog-api-key": key }, body ? { "Content-Type": "application/json" } : {}),
+      body: body ? JSON.stringify(body) : undefined,
+      signal: ctrl.signal
+    });
+  } catch (e) {
+    clearTimeout(timer);
+    throw new Error(navigator.onLine === false ? "İnternet bağlantısı yok." : "Google'a ulaşılamadı. Bağlantını kontrol edip tekrar dene.");
+  }
+  clearTimeout(timer);
+  let data = null;
+  try { data = await res.json(); } catch (e) { data = null; }
+  if (!res.ok) {
+    const msg = data && data.error && data.error.message ? String(data.error.message) : "";
+    if (res.status === 400 && /api key/i.test(msg)) throw new Error("Anahtar geçersiz görünüyor. AI Studio'dan kopyaladığın anahtarı kontrol et.");
+    if (res.status === 403) throw new Error("Bu anahtarın Gemini API'ye erişim izni yok. AI Studio'da yeni bir anahtar oluşturmayı dene.");
+    if (res.status === 429) throw new Error("Ücretsiz kullanım sınırına ulaşıldı. Bir süre bekleyip tekrar dene.");
+    if (res.status === 404) throw new Error("Seçili model artık kullanılamıyor. Asistan ayarlarından başka bir model seç.");
+    if (res.status >= 500) throw new Error("Google tarafında geçici bir sorun var. Biraz sonra tekrar dene.");
+    throw new Error("İstek başarısız oldu" + (msg ? `: ${msg}` : "."));
+  }
+  return data;
+}
+
+// Metin üretebilen "flash" modellerini, en yeni ve genel amaçlı olan önce gelecek şekilde döndürür.
+async function aiListModels(key) {
+  const data = await aiRequest("models?pageSize=200", key);
+  const models = (data.models || []).filter(m => (m.supportedGenerationMethods || []).includes("generateContent")
+    && /flash/i.test(m.name) && !/image|tts|audio|live|embed|vision|robotics|computer|native/i.test(m.name));
+  const ver = (n) => { const m = n.match(/(\d+(?:\.\d+)?)/); return m ? Number(m[1]) : 0; };
+  models.sort((a, b) => {
+    const la = /latest/.test(a.name) ? 1 : 0, lb = /latest/.test(b.name) ? 1 : 0;
+    if (la !== lb) return lb - la;
+    const pa = /preview|exp/.test(a.name) ? 1 : 0, pb = /preview|exp/.test(b.name) ? 1 : 0;
+    if (pa !== pb) return pa - pb;
+    const lia = /lite/.test(a.name) ? 1 : 0, lib = /lite/.test(b.name) ? 1 : 0;
+    if (lia !== lib) return lia - lib;
+    return ver(b.name) - ver(a.name);
+  });
+  return models.map(m => ({ name: m.name, label: m.displayName || m.name.replace("models/", "") }));
+}
+
+function aiProfileContext() {
+  const p = APP.state.profile;
+  if (!p || !APP.state.settings.aiShareProfile) return "";
+  const goal = (GOALS.find(g => g[0] === p.goal) || [])[1];
+  const exp = (EXPERIENCE.find(g => g[0] === p.experience) || [])[1];
+  const eq = (p.equipment || []).map(id => (EQUIPMENT.find(e => e[0] === id) || [])[1]).filter(Boolean);
+  return `Kullanıcı bilgisi (kullanıcı paylaşmayı seçti): hedef ${goal || "-"}, deneyim ${exp || "-"}, antrenman yeri ${p.location === "gym" ? "spor salonu" : "ev"}`
+    + (eq.length ? `, ekipman: ${eq.join(", ")}` : "")
+    + (p.limitations ? `, belirttiği hareket kısıtı: ${p.limitations}` : "") + ".";
+}
+
+async function aiSend(text) {
+  const key = aiGetKey();
+  const chat = APP.ui.aiChat || (APP.ui.aiChat = []);
+  chat.push({ role: "user", text });
+  APP.ui.aiBusy = true;
+  aiRenderMessages();
+  try {
+    const ctx = aiProfileContext();
+    const body = {
+      systemInstruction: { parts: [{ text: AI_SYSTEM + (ctx ? " " + ctx : "") }] },
+      contents: chat.slice(-20).map(m => ({ role: m.role, parts: [{ text: m.text }] })),
+      generationConfig: { temperature: 0.6, maxOutputTokens: 1200 }
+    };
+    const data = await aiRequest(`${APP.state.settings.aiModel}:generateContent`, key, body);
+    const cand = data && data.candidates && data.candidates[0];
+    const out = cand && cand.content && cand.content.parts ? cand.content.parts.map(p => p.text || "").join("").trim() : "";
+    if (!out) {
+      const reason = cand && cand.finishReason;
+      chat.push({ role: "model", text: reason === "SAFETY" ? "Bu soruya güvenlik nedeniyle yanıt verilemedi. Soruyu farklı ifade etmeyi dene." : "Boş yanıt geldi. Tekrar dene.", error: true });
+    } else {
+      chat.push({ role: "model", text: out });
+    }
+  } catch (e) {
+    chat.push({ role: "model", text: e.message, error: true });
+  }
+  APP.ui.aiBusy = false;
+  aiRenderMessages();
+}
+
+// Basit ve güvenli biçimlendirme: **kalın**, madde ve numaralı listeler, # başlıklar. HTML yorumlanmaz.
+function aiFormat(text) {
+  const wrap = h("div", { class: "ai-text" });
+  const inline = (line) => {
+    const parts = String(line).split(/(\*\*[^*]+\*\*)/g).filter(Boolean);
+    return parts.map(p => (/^\*\*[^*]+\*\*$/.test(p) ? h("strong", { text: p.slice(2, -2) }) : p.replace(/\*(\S[^*]*)\*/g, "$1")));
+  };
+  let list = null, listType = null;
+  String(text).split(/\r?\n/).forEach(raw => {
+    const line = raw.trimEnd();
+    const bullet = line.match(/^\s*[-*•]\s+(.*)$/);
+    const num = line.match(/^\s*(\d+)[.)]\s+(.*)$/);
+    if (bullet || num) {
+      const type = bullet ? "ul" : "ol";
+      if (!list || listType !== type) { list = h(type, {}); listType = type; wrap.appendChild(list); }
+      list.appendChild(h("li", {}, inline(bullet ? bullet[1] : num[2])));
+      return;
+    }
+    list = null; listType = null;
+    if (!line.trim()) return;
+    const head = line.match(/^#{1,6}\s+(.*)$/);
+    wrap.appendChild(head ? h("p", { class: "ai-head" }, h("strong", {}, inline(head[1]))) : h("p", {}, inline(line)));
+  });
+  return wrap;
+}
+
+function aiRenderMessages() {
+  const box = document.getElementById("ai-messages");
+  if (!box) return;
+  clear(box);
+  const chat = APP.ui.aiChat || [];
+  if (!chat.length) {
+    box.appendChild(h("div", { class: "ai-empty" },
+      h("p", { class: "muted", text: "Bir soru sor ya da aşağıdaki önerilerden birini seç." })));
+  }
+  chat.forEach(m => box.appendChild(h("div", { class: `ai-msg ${m.role === "user" ? "me" : "bot"}${m.error ? " err" : ""}` },
+    m.role === "user" ? h("p", { text: m.text }) : aiFormat(m.text))));
+  if (APP.ui.aiBusy) box.appendChild(h("div", { class: "ai-msg bot typing" }, h("p", { class: "muted", text: "Yazıyor…" })));
+  box.scrollTop = box.scrollHeight;
+  const send = document.getElementById("ai-send");
+  if (send) send.disabled = !!APP.ui.aiBusy;
+}
+
+function aiSetupCard(onDone) {
+  const keyInput = h("input", { class: "input", type: "password", id: "ai-key", placeholder: "AIza…", attrs: { autocomplete: "off", spellcheck: "false" } });
+  const status = h("p", { class: "small", attrs: { "aria-live": "polite" } });
+  const saveBtn = h("button", { type: "submit", class: "btn btn-primary" }, "Anahtarı kaydet ve dene");
+  const form = h("form", { class: "stack", attrs: { novalidate: "" } },
+    h("ol", { class: "ai-steps" },
+      h("li", {}, "Google hesabınla ", h("a", { attrs: { href: "https://aistudio.google.com/apikey", target: "_blank", rel: "noopener noreferrer" } }, "aistudio.google.com/apikey"), " adresine gir."),
+      h("li", {}, "\"Create API key\" (API anahtarı oluştur) düğmesine bas ve oluşan anahtarı kopyala."),
+      h("li", {}, "Anahtarı aşağıya yapıştırıp kaydet.")),
+    field({ label: "Gemini API anahtarı", input: keyInput, hint: "Anahtar yalnızca bu cihazda saklanır, yedeğe dahil edilmez ve kimseyle paylaşılmaz." }),
+    h("div", { class: "form-actions" }, saveBtn),
+    status);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    clearFieldErrors(form);
+    const key = keyInput.value.trim();
+    if (key.length < 20 || /\s/.test(key)) { setFieldError(keyInput, "Anahtarı eksiksiz yapıştır."); keyInput.focus(); return; }
+    saveBtn.disabled = true;
+    status.textContent = "Anahtar deneniyor…";
+    try {
+      const models = await aiListModels(key);
+      if (!models.length) throw new Error("Bu anahtarla kullanılabilir bir Flash modeli bulunamadı.");
+      if (!aiSetKey(key)) throw new Error("Tarayıcı depolamasına yazılamadı.");
+      APP.state.settings.aiModel = models[0].name;
+      APP.ui.aiModels = models;
+      saveState();
+      toast("Asistan hazır.", "ok");
+      onDone();
+    } catch (err) {
+      status.textContent = "";
+      setFieldError(keyInput, err.message);
+      saveBtn.disabled = false;
+    }
+  });
+  return card({ title: "Asistanı kur (bir kez)", sub: "Asistan, Google'ın Gemini modelini senin ücretsiz anahtarınla kullanır." },
+    form,
+    h("div", { class: "notice notice-warn" },
+      h("p", { text: "Ücretsiz kullanımda Google, gönderdiğin soruları ve yanıtları modellerini geliştirmek için kullanabilir. Kişisel sağlık bilgisi veya özel bilgi paylaşma." })));
+}
+
+function renderAssistant(root) {
+  if (!aiGetKey() || !APP.state.settings.aiModel) {
+    root.appendChild(aiSetupCard(() => rerender()));
+    return;
+  }
+  const quick = ["Squat nasıl doğru yapılır?", "Bench press'te sık yapılan hatalar neler?", "Antrenman öncesi 5 dakikalık ısınma öner.",
+    "Yeterli proteini nasıl alırım?", "Barfiks çekemiyorum, nasıl başlarım?"];
+  const input = h("textarea", { class: "input", id: "ai-input", rows: 2, maxlength: 2000, placeholder: "Sorunu yaz… (Enter: gönder, Shift+Enter: yeni satır)",
+    attrs: { "aria-label": "Asistana mesaj" } });
+  if (APP.ui.aiDraft) { input.value = APP.ui.aiDraft; APP.ui.aiDraft = null; }
+  const sendBtn = h("button", { type: "submit", class: "btn btn-primary", id: "ai-send", attrs: { "aria-label": "Gönder" } }, icon("send"), "Gönder");
+  const form = h("form", { class: "ai-compose" }, input, sendBtn);
+  const submit = () => {
+    const t = input.value.trim();
+    if (!t || APP.ui.aiBusy) return;
+    input.value = "";
+    aiSend(t);
+  };
+  form.addEventListener("submit", (e) => { e.preventDefault(); submit(); });
+  input.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); submit(); } });
+
+  const chips = h("div", { class: "chips ai-quick" }, quick.map(q => h("button", { type: "button", class: "chip-btn",
+    on: { click: () => { if (!APP.ui.aiBusy) aiSend(q); } } }, q)));
+  const newBtn = h("button", { type: "button", class: "btn btn-sm btn-ghost" }, "Yeni sohbet");
+  newBtn.addEventListener("click", () => { APP.ui.aiChat = []; aiRenderMessages(); input.focus(); });
+
+  root.appendChild(card({ title: "Fitness asistanı", sub: "Hareket tekniği, ısınma, beslenme gibi genel sorular için. Tıbbi tavsiye vermez.", actions: [newBtn], cls: "ai-card" },
+    h("div", { class: "ai-messages", id: "ai-messages", attrs: { role: "log", "aria-live": "polite" } }),
+    chips, form,
+    h("p", { class: "muted small", text: "Yanıtlar yapay zekâ tarafından üretilir ve hatalı olabilir. Ağrı veya sağlık sorununda bir uzmana danış. Sohbet sayfa yenilenince silinir." })));
+  aiRenderMessages();
+  if (input.value) input.focus();
+
+  // Ayarlar
+  const models = APP.ui.aiModels || [{ name: APP.state.settings.aiModel, label: APP.state.settings.aiModel.replace("models/", "") }];
+  const modelSel = selectInput({ id: "ai-model", value: APP.state.settings.aiModel, options: models.map(m => [m.name, m.label]) });
+  modelSel.addEventListener("change", () => { APP.state.settings.aiModel = modelSel.value; saveState(); toast("Model değiştirildi.", "ok"); });
+  const refresh = h("button", { type: "button", class: "btn btn-sm" }, "Model listesini yenile");
+  refresh.addEventListener("click", async () => {
+    refresh.disabled = true;
+    try { APP.ui.aiModels = await aiListModels(aiGetKey()); rerender(); }
+    catch (e) { toast(e.message, "err"); refresh.disabled = false; }
+  });
+  const share = h("input", { type: "checkbox", id: "ai-share", checked: APP.state.settings.aiShareProfile ? true : undefined });
+  share.addEventListener("change", () => { APP.state.settings.aiShareProfile = share.checked; saveState(); });
+  const removeBtn = h("button", { type: "button", class: "btn btn-sm btn-danger" }, "Anahtarı bu cihazdan sil");
+  removeBtn.addEventListener("click", async () => {
+    if (!(await confirmDialog("Gemini anahtarın bu cihazdan silinecek. Asistanı tekrar kullanmak için yeniden girmen gerekir.", "Sil"))) return;
+    aiSetKey("");
+    APP.state.settings.aiModel = null;
+    APP.ui.aiChat = [];
+    saveState();
+    rerender();
+  });
+  root.appendChild(h("details", { class: "card ai-settings" },
+    h("summary", { class: "card-title", text: "Asistan ayarları" }),
+    h("div", { class: "stack" },
+      field({ label: "Model", input: modelSel, hint: "Ücretsiz kullanımda Flash modelleri önerilir." }),
+      h("div", { class: "row" }, refresh),
+      h("label", { class: "check", for: "ai-share" }, share, "Hedefimi, deneyimimi, ekipmanımı ve hareket kısıtımı asistanla paylaş"),
+      h("p", { class: "muted small", text: "Kapalıyken yalnızca yazdığın mesajlar gönderilir. Kilo, ölçü ve günlük kayıtların hiçbir durumda gönderilmez." }),
+      h("div", { class: "row" }, removeBtn))));
+}
+
+// ===== GUIDE =====
+// ===== Kullanım kılavuzu (ilk açılışta ve ? düğmesiyle) =====
+
+const GUIDE_SLIDES = [
+  { icon: "workout", title: "Hoş geldin!", lines: [
+    "Bu uygulama antrenmanını, beslenmeni ve vücut ölçülerini tek yerden takip etmen için.",
+    "Tüm kayıtların yalnızca bu cihazda saklanır; hiçbir sunucuya gönderilmez.",
+    "Birkaç adımda nasıl kullanılacağına bakalım. İstersen şimdi geçip sonra sağ üstteki ? düğmesinden tekrar açabilirsin."
+  ] },
+  { icon: "today", title: "Bugün ekranı", lines: [
+    "Günün antrenmanı, öğünlerin, su, adım, uyku ve enerji kayıtların burada.",
+    "Üstteki tarih okları ile geçmiş günlere gidip kayıtlarını düzeltebilirsin.",
+    "Boş bıraktığın alanlar \"kaydedilmedi\" sayılır; sıfır olarak yorumlanmaz."
+  ] },
+  { icon: "workout", title: "Antrenman planını kendin kur", lines: [
+    "Antrenman → Plan sekmesinde bir günü \"Antrenman gününe çevir\", adını yaz ve hareketleri ekle.",
+    "Listede olmayan bir hareketi \"Kendi hareketini ekle\" ile oluşturabilirsin.",
+    "İstersen \"Hazır şablonla başla\" ile profiline göre bir taslak alıp düzenleyebilirsin."
+  ] },
+  { icon: "trophy", title: "Seans, ağırlık takibi ve rekorlar", lines: [
+    "Seans sekmesinde her set için ağırlık ve tekrar gir, \"Tamam\" işaretle; dinlenme sayacını kullan.",
+    "Gelişim sekmesi her hareket için rekorunu (PR), tahmini 1 tekrar maksimumunu ve dönem içi değişimi gösterir.",
+    "Seansı bitirdiğinde yeni bir rekor kırdıysan uygulama sana söyler."
+  ] },
+  { icon: "nutrition", title: "Beslenme", lines: [
+    "Hedefler sekmesi tahmini kalori ve makro ihtiyacını gösterir; istersen kendi hedefini girebilirsin.",
+    "Günlük sekmesinde öğün ekle. Listede yoksa \"İnternette ara\" ile ürün adını veya barkodu arayıp ekleyebilirsin (Open Food Facts).",
+    "Menü sekmesi örnek bir gün ve alışveriş listesi hazırlar."
+  ] },
+  { icon: "ruler", title: "İlerleme ve vücut ölçüleri", lines: [
+    "İlerleme ekranında kilo ve bel, boyun, kalça, kol, omuz gibi ölçülerini kaydet.",
+    "Bel ve boyun (kadınlarda kalça da) girersen tahmini yağ oranın hesaplanır.",
+    "Haftalık ekranı, yalnızca girdiğin kayıtlara dayanarak kısa bir değerlendirme yapar."
+  ] },
+  { icon: "chat", title: "Asistan", lines: [
+    "\"Bu hareket nasıl yapılır?\" gibi sorular için yapay zekâ asistanını kullanabilirsin.",
+    "Google'dan ücretsiz bir Gemini anahtarı alıp Asistan ekranına bir kez girmen yeterli; anahtar yalnızca bu cihazda saklanır.",
+    "Asistan tıbbi değerlendirme yapmaz; ağrı veya sağlık sorununda bir uzmana danış."
+  ] },
+  { icon: "download", title: "Telefona kur ve yedek al", lines: [
+    "Telefonda tarayıcı menüsünden \"Ana ekrana ekle\" dersen uygulama gibi açılır ve internetsiz de çalışır.",
+    "Telefon ile bilgisayar kayıtları otomatik eşitlenmez: Profil ve Ayarlar → Yedeği indir, diğer cihazda Yedekten geri yükle.",
+    "Hazırsan başlayalım!"
+  ] }
+];
+
+let guideState = { index: 0, prevFocus: null };
+
+function openGuide(startIndex) {
+  guideState.index = startIndex || 0;
+  guideState.prevFocus = document.activeElement;
+  renderGuide();
+  document.addEventListener("keydown", guideKeydown);
+}
+
+function closeGuide() {
+  const root = document.getElementById("guide-root");
+  if (root) clear(root);
+  document.body.classList.remove("guide-open");
+  document.removeEventListener("keydown", guideKeydown);
+  if (APP.state && !APP.state.settings.guideSeen) {
+    APP.state.settings.guideSeen = true;
+    saveState();
+  }
+  if (guideState.prevFocus && guideState.prevFocus.focus) guideState.prevFocus.focus();
+}
+
+function guideKeydown(e) {
+  if (e.key === "Escape") { e.preventDefault(); closeGuide(); }
+  else if (e.key === "ArrowRight") guideGo(1);
+  else if (e.key === "ArrowLeft") guideGo(-1);
+  else if (e.key === "Tab") {
+    // Odak kılavuz içinde kalsın.
+    const box = document.querySelector(".guide-box");
+    if (!box) return;
+    const items = [...box.querySelectorAll("button")].filter(b => !b.disabled);
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+}
+
+function guideGo(delta) {
+  const next = guideState.index + delta;
+  if (next < 0) return;
+  if (next >= GUIDE_SLIDES.length) { closeGuide(); return; }
+  guideState.index = next;
+  renderGuide();
+}
+
+function renderGuide() {
+  const root = document.getElementById("guide-root");
+  if (!root) return;
+  clear(root);
+  document.body.classList.add("guide-open");
+  const i = guideState.index;
+  const s = GUIDE_SLIDES[i];
+  const last = i === GUIDE_SLIDES.length - 1;
+  const nextBtn = h("button", { type: "button", class: "btn btn-primary", on: { click: () => guideGo(1) } },
+    last ? "Başla" : "İleri", icon(last ? "check" : "chevron-right"));
+  const box = h("div", { class: "guide-box", attrs: { role: "dialog", "aria-modal": "true", "aria-labelledby": "guide-title" } },
+    h("div", { class: "guide-top" },
+      h("span", { class: "muted small", text: `${i + 1} / ${GUIDE_SLIDES.length}` }),
+      h("button", { type: "button", class: "btn btn-ghost btn-sm", on: { click: closeGuide } }, last ? "Kapat" : "Geç")),
+    h("div", { class: "guide-icon", attrs: { "aria-hidden": "true" } }, icon(s.icon)),
+    h("h2", { class: "guide-title", id: "guide-title", text: s.title }),
+    h("ul", { class: "guide-lines" }, s.lines.map(t => h("li", { text: t }))),
+    h("div", { class: "guide-dots", attrs: { "aria-hidden": "true" } },
+      GUIDE_SLIDES.map((_, k) => h("span", { class: k === i ? "on" : "" }))),
+    h("div", { class: "guide-actions" },
+      h("button", { type: "button", class: "btn", disabled: i === 0 ? true : undefined, on: { click: () => guideGo(-1) } }, icon("chevron-left"), "Geri"),
+      h("span", { class: "spacer" }),
+      nextBtn));
+  root.appendChild(h("div", { class: "guide-overlay", on: { click: (e) => { if (e.target === e.currentTarget) closeGuide(); } } }, box));
+  nextBtn.focus();
+}
+
+// İlk açılışta (profil yokken) kılavuzu bir kez göster. CORE'un init'inden sonra çalışır.
+document.addEventListener("DOMContentLoaded", () => {
+  if (APP.state && !APP.state.profile && !APP.state.settings.guideSeen) openGuide(0);
+});
 </script>
 <script>
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
