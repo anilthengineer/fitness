@@ -1,6 +1,6 @@
 // Çevrimdışı çalışma: dosyalar önbelleğe alınır. Sayfa önce ağdan istenir (güncellemeler gelsin),
 // ağ yoksa önbellekteki sürüm açılır. Kullanıcı verisi burada değil, tarayıcının localStorage'ındadır.
-const CACHE = "fitness-v3";
+const CACHE = "fitness-v4";
 const FILES = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", (event) => {

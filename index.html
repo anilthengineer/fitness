@@ -6901,15 +6901,52 @@ async function aiRequest(path, key, body) {
     const err = (data && data.error) || {};
     const msg = err.message ? String(err.message) : "";
     const reason = JSON.stringify(err.details || "").match(/"reason":"([A-Z_]+)"/);
+    const fail = (m) => { const e = new Error(m); e.status = res.status; return e; };
     const detail = ` (Kod ${res.status}${reason ? ", " + reason[1] : err.status ? ", " + err.status : ""}${msg ? ": " + msg.slice(0, 160) : ""})`;
-    if ((res.status === 400 && /api key/i.test(msg)) || res.status === 401) throw new Error("Anahtar kabul edilmedi. AI Studio'dan kopyaladığın anahtarı kontrol et veya yeni bir anahtar oluştur." + detail);
-    if (res.status === 403) throw new Error("Bu anahtarın Gemini API'ye erişim izni yok. AI Studio'da yeni bir anahtar oluşturmayı dene." + detail);
-    if (res.status === 429) throw new Error("Ücretsiz kullanım sınırına ulaşıldı veya bu model için ücretsiz kota yok. Bir süre bekle ya da ayarlardan başka bir model seç." + detail);
-    if (res.status === 404) throw new Error("Seçili model kullanılamıyor. Asistan ayarlarından başka bir model seç." + detail);
-    if (res.status >= 500) throw new Error("Google tarafında geçici bir sorun var. Biraz sonra tekrar dene." + detail);
-    throw new Error("İstek başarısız oldu." + detail);
+    if ((res.status === 400 && /api key/i.test(msg)) || res.status === 401) throw fail("Anahtar kabul edilmedi. AI Studio'dan kopyaladığın anahtarı kontrol et veya yeni bir anahtar oluştur." + detail);
+    if (res.status === 403) throw fail("Bu anahtarın Gemini API'ye erişim izni yok. AI Studio'da yeni bir anahtar oluşturmayı dene." + detail);
+    if (res.status === 429) throw fail("Ücretsiz kullanım sınırına ulaşıldı veya bu model için ücretsiz kota yok. Bir süre bekle ya da ayarlardan başka bir model seç." + detail);
+    if (res.status === 404) throw fail("Seçili model kullanılamıyor. Asistan ayarlarından başka bir model seç." + detail);
+    if (res.status >= 500) throw fail("Google tarafında geçici bir sorun var. Biraz sonra tekrar dene." + detail);
+    throw fail("İstek başarısız oldu." + detail);
   }
   return data;
+}
+
+// Seçili model yoğun (503), kotası dolu (429) veya kaldırılmışsa (404) listedeki diğer modeller sırayla denenir.
+// Çalışan model bulunursa ayarlara kaydedilir. Dönüş: { data, model, switched }
+async function aiGenerate(key, body) {
+  const current = APP.state.settings.aiModel;
+  try {
+    return { data: await aiRequest(`${current}:generateContent`, key, body), model: current, switched: false };
+  } catch (e) {
+    if (![429, 500, 503, 404].includes(e.status)) throw e;
+    let models = APP.ui.aiModels;
+    if (!models || !models.length) {
+      try { models = APP.ui.aiModels = await aiListModels(key); } catch (le) { throw e; }
+    }
+    // Önce yoğunluğa daha dayanıklı "lite" ve kararlı sürümler denenir; en fazla 4 yedek model.
+    const others = models.map(m => m.name).filter(n => n !== current)
+      .sort((a, b) => (/lite/.test(b) ? 1 : 0) - (/lite/.test(a) ? 1 : 0)).slice(0, 4);
+    let lastErr = e;
+    for (const name of others) {
+      try {
+        const data = await aiRequest(`${name}:generateContent`, key, body);
+        APP.state.settings.aiModel = name;
+        saveState();
+        return { data, model: name, switched: true };
+      } catch (e2) {
+        lastErr = e2;
+        if (![429, 500, 503, 404].includes(e2.status)) throw e2;
+      }
+    }
+    throw lastErr;
+  }
+}
+
+function aiModelLabel(name) {
+  const m = (APP.ui.aiModels || []).find(x => x.name === name);
+  return m ? m.label : String(name).replace("models/", "");
 }
 
 // Ayarlardaki "Bağlantıyı test et": model listesi ve kısa bir deneme mesajı.
@@ -6924,7 +6961,9 @@ async function aiDiagnose() {
   } catch (e) { lines.push(`Model listesi: HATA — ${e.message}`); }
   try {
     APP.ui.aiTransport = 0;
-    const data = await aiRequest(`${APP.state.settings.aiModel}:generateContent`, key, { contents: [{ role: "user", parts: [{ text: "Sadece 'tamam' yaz." }] }] });
+    const r = await aiGenerate(key, { contents: [{ role: "user", parts: [{ text: "Sadece 'tamam' yaz." }] }] });
+    const data = r.data;
+    if (r.switched) lines.push(`Seçili model yoğundu; ${aiModelLabel(r.model)} modeline geçildi ve kaydedildi.`);
     const txt = data && data.candidates && data.candidates[0] && data.candidates[0].content ? (data.candidates[0].content.parts || []).map(p => p.text || "").join("") : "";
     lines.push(`Deneme mesajı: başarılı (${APP.ui.aiTransport + 1}. yöntemle) — yanıt: "${txt.trim().slice(0, 40)}"`);
   } catch (e) { lines.push(`Deneme mesajı: HATA — ${e.message}`); }
@@ -6973,7 +7012,9 @@ async function aiSend(text) {
       contents: chat.slice(-20).map(m => ({ role: m.role, parts: [{ text: m.text }] })),
       generationConfig: { temperature: 0.6, maxOutputTokens: 1200 }
     };
-    const data = await aiRequest(`${APP.state.settings.aiModel}:generateContent`, key, body);
+    const r = await aiGenerate(key, body);
+    const data = r.data;
+    if (r.switched) toast(`Model yoğun olduğu için ${aiModelLabel(r.model)} modeline geçildi.`, "info");
     const cand = data && data.candidates && data.candidates[0];
     const out = cand && cand.content && cand.content.parts ? cand.content.parts.map(p => p.text || "").join("").trim() : "";
     if (!out) {
